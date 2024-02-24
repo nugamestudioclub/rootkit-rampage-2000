@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using UnityEngine;
 
 public class Actor
 {
     public string Id { get; private set; }
     public ActorType Type { get; private set; }
 
-    public Vector3 Position { get; private set; }
+    public Vector2Int Position { get; private set; }
     public string Name { get; private set; }
 
     public int MaxHealth { get; private set; }
@@ -29,14 +30,14 @@ public class Actor
         Tags = new List<string>(tags);
 
     }
-    public void Spawn(string id, ActorType type, Vector3 startingPos)
+    public void Spawn(string id, ActorType type, Vector2Int startingPos)
     {
         Id = id;
         Type = type;
         Position = startingPos;
     }
 
-    public void Move(Vector3 moveTo)
+    public void Move(Vector2Int moveTo)
     {
         Position = moveTo;
     }
