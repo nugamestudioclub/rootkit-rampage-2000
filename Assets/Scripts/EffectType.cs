@@ -1,3 +1,6 @@
-﻿public enum EffectType {
+﻿using System;
+
+[Serializable]
+public enum EffectType {
 	None,
 }

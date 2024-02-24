@@ -5,8 +5,8 @@ public readonly struct AbilityOutcome {
 	// TODO: add constructor
 
 	private readonly List<Vector2> _targets;
-	private readonly List<KeyValuePair<string, Effect>> _effects;
+	private readonly List<KeyValuePair<string, EffectTrigger>> _effects;
 
 	public IList<Vector2> Targets => _targets;
-	public IList<KeyValuePair<string, Effect>> Effects => _effects;
+	public IList<KeyValuePair<string, EffectTrigger>> Effects => _effects;
 }
