@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TreeEditor;
 
 public class GameState
 {
@@ -8,6 +9,9 @@ public class GameState
     private readonly Tile[][] tiles;
     public Tile[][] Tiles => tiles;
 
+    private readonly float[,] costMap;
+
+    public float[,] CostMap => costMap;
 
     private readonly List<string> turnOrder = new List<string>();
     public IList<string> TurnOrder => turnOrder;
@@ -26,6 +30,26 @@ public class GameState
     public GameState(Tile[][] map)
     {
         tiles = map;
+        costMap = MakeCostMap();
+    }
+
+    private float[,] MakeCostMap()
+    {
+        // TODO check that the dimensions are correct
+        float[,] costMap = new float[tiles.Length, tiles[0].Length];
+        for (int i = 0; i < costMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < costMap.GetLength(1); j++)
+            {
+                switch (tiles[i][j])
+                {
+                    case Tile.Basic:
+                        costMap[i, j] = 1;
+                        break;
+                }
+            }
+        }
+        return costMap;
     }
 
 }
