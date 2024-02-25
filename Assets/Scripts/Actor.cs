@@ -11,7 +11,22 @@ public class Actor
     public string Name { get; private set; }
 
     public int MaxHealth { get; private set; }
-    public int CurrentHealth { get; private set; }
+
+    public int _currentHealth;
+    public int CurrentHealth
+    {
+        get => _currentHealth; 
+        set
+        {
+            _currentHealth = value;
+            if (CurrentHealth <=0)
+            {
+                IsDead = true;
+            }
+        }
+    }
+
+    public bool IsDead { get; private set; }
     public int MaxEnergy { get; private set; }
     public int CurrentEnergy { get; private set; }
 
@@ -24,6 +39,7 @@ public class Actor
     {
         Name = name;
         CurrentHealth = MaxHealth = health;
+        IsDead = false;
         CurrentEnergy = MaxEnergy = energy;
         Movement = movement;
         Abilities = new List<Ability>(abilities);
