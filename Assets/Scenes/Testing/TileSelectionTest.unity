@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1028230afd3af8744b4b3740cb891bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  display: {fileID: 1197425195}
+  tileDisplay: {fileID: 1197425195}
 --- !u!1001 &248803507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -176,9 +176,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1680639414}
     m_Modifications:
+    - target: {fileID: 79768230893228830, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
+      propertyPath: m_Name
+      value: Background
+      objectReference: {fileID: 0}
     - target: {fileID: 1325997105393139993, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
       propertyPath: m_Name
       value: GameplayPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233688621135859057, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
+      propertyPath: actColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233688621135859057, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
+      propertyPath: moveColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233688621135859057, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
+      propertyPath: selectColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233688621135859057, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
+      propertyPath: tileBackground
+      value: 
+      objectReference: {fileID: 21300000, guid: 988a031afc7bad2478b5e9d8cceb30ee, type: 3}
+    - target: {fileID: 5248842065074567235, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248842065074567235, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248842065074567235, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8984300458995889127, guid: b46e5d906ac00474eb1dc740f649f706, type: 3}
       propertyPath: m_Pivot.x

@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
 
     private GameState _gameState;
     [SerializeField]
-    private TileDisplay display;
+    private TileDisplay tileDisplay;
 
 
     private void Update()
@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
         {
             //check tile clicked
             
-            Vector3Int rawCelPos = display.Grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Vector3Int rawCelPos = tileDisplay.Grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             Vector2Int cellClicked = new Vector2Int(rawCelPos.x, rawCelPos.y);
 
             Debug.Log($"Clicked cell ({cellClicked.x}, {cellClicked.y})");
@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
             {
                 SelectTile(cellClicked);
             }
-            display.UpdateTiles(_gameState.Tiles);
+            tileDisplay.UpdateTiles(_gameState.Tiles);
         }
     }
 
@@ -81,6 +81,10 @@ public class UIManager : MonoBehaviour
         throw new NotImplementedException();
     }
 
+    public void UpdateTiles(Tile[,] tiles)
+    {
+        tileDisplay.UpdateTiles(tiles);
+    }
     public void ShowSelectableTiles(IList<Vector2Int> selectableTiles)
     {
         throw new NotImplementedException();

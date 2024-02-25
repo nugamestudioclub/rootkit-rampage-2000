@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,6 +33,9 @@ public class GameStart : MonoBehaviour
             actors.ToList(),
             abilities.ToList()
         );
+        Debug.Log($"Starting Game Mode: {Enum.GetName(typeof(GameMode), initialGameState.CurrentMode)}");
+        //for debugging
+        initialGameState.CurrentMode = GameMode.WaitingForSelection;
     }
 
     void Update()

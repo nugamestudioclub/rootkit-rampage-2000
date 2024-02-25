@@ -41,7 +41,7 @@ public class TileDisplay : MonoBehaviour
                     TileUIState.Selectable => selectColor,
                     TileUIState.CanAttack => actColor,
                     TileUIState.CanMove => moveColor,
-                    _ => Color.white
+                    _ => new Color(0,0,0,0)
 
                 };
                 uiSpriteRenderer.color = tileColor;
@@ -50,7 +50,7 @@ public class TileDisplay : MonoBehaviour
                 
                 GameObject backgroundObject = new GameObject($"BackGround");
                 SpriteRenderer bgSpriteRenderer = backgroundObject.AddComponent<SpriteRenderer>();
-                //bgSpriteRenderer.sprite = tileBackground;
+                bgSpriteRenderer.sprite = tileBackground;
 
                 backgroundObject.transform.parent = parentObject.transform;
 

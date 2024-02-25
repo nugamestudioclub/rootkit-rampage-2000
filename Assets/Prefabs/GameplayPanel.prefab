@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2342000651450068495}
   - component: {fileID: 5248842065074567235}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3160377, g: 0.34297758, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -105,8 +105,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 342020217880077543}
   - {fileID: 4608269923270154124}
+  - {fileID: 342020217880077543}
   - {fileID: 6985411587021088428}
   - {fileID: 4964201471496516064}
   - {fileID: 7415377122462313535}
@@ -364,11 +364,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 1511845025816183151}
-  selectColor: {r: 0, g: 1, b: 0.21163177, a: 0}
-  moveColor: {r: 0.06111298, g: 0.3534641, b: 0.9716981, a: 0}
-  actColor: {r: 1, g: 0, b: 0, a: 0}
+  selectColor: {r: 0, g: 1, b: 0.21163177, a: 1}
+  moveColor: {r: 0.06111298, g: 0.3534641, b: 0.9716981, a: 1}
+  actColor: {r: 1, g: 0, b: 0, a: 1}
   tileUi: {fileID: 21300000, guid: c0b2ccece2b46b247b1b3b0c2b8c0a87, type: 3}
-  tileBackground: {fileID: 21300000, guid: c0b2ccece2b46b247b1b3b0c2b8c0a87, type: 3}
+  tileBackground: {fileID: 21300000, guid: 988a031afc7bad2478b5e9d8cceb30ee, type: 3}
 --- !u!1 &3708815502399413854
 GameObject:
   m_ObjectHideFlags: 0

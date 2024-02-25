@@ -33,6 +33,10 @@ public class GameManager
 
     public void Tick()
     {
+        if (GameState.CurrentMode != GameState.PreviousMode)
+        {
+            Debug.Log($"Game Mode Updated: {Enum.GetName(typeof(GameMode), GameState.CurrentMode)}");
+        }
         switch (GameState.CurrentMode)
         {
             case GameMode.StartRound:
@@ -63,7 +67,14 @@ public class GameManager
                 break;
             case GameMode.WaitingForSelection:
                 //show selectable tiles
-                UIManager.ShowSelectableTiles(GameState.SelectableTiles);
+                GameState.SelectableTiles.Add(new Vector2Int(1, 1));
+                GameState.SelectableTiles.Add(new Vector2Int(5, 2));
+                foreach (Vector2Int pos in GameState.SelectableTiles)
+                {
+                    Tile currentTile = GameState.Tiles[pos.x, pos.y];
+                    GameState.Tiles[pos.x, pos.y] = new Tile(currentTile.Type, TileUIState.Selectable);
+                }
+                UIManager.UpdateTiles(GameState.Tiles);
                 break;
             case GameMode.ResolveEffects:
                 //set active effects with selected tile and selected action
