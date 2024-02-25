@@ -72,9 +72,9 @@ public class GameState
         {
             for (int j = 0; j < costMap.GetLength(1); j++)
             {
-                switch (tiles[i, j])
+                switch (tiles[i, j].Type)
                 {
-                    case Tile.Basic:
+                    case TileType.Basic:
                         costMap[i, j] = 1;
                         break;
                 }

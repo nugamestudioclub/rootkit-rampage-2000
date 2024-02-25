@@ -10,6 +10,23 @@ public class UIManager : MonoBehaviour
     // to render menus, selections, etc.
 
     private GameState _gameState;
+    [SerializeField]
+    private Grid grid;
+
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            //check tile clicked
+            
+            Vector3Int rawCelPos = grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Vector2Int cellClicked = new Vector2Int(rawCelPos.x, rawCelPos.y);
+
+            Debug.Log($"Clicked cell ({cellClicked.x}, {cellClicked.y})");
+        }
+    }
+
 
     public void LoadGameState(GameState gameState)
     {
