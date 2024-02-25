@@ -295,9 +295,13 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1974463495}
+    - target: {fileID: 2963255539358858108, guid: 69420fbde0627844fbdc564398dc452b, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4662282618263921299, guid: 69420fbde0627844fbdc564398dc452b, type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: Vista
       objectReference: {fileID: 0}
     - target: {fileID: 8717684217220718590, guid: 69420fbde0627844fbdc564398dc452b, type: 3}
       propertyPath: m_Pivot.x
