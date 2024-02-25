@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -24,9 +25,18 @@ public class UIManager : MonoBehaviour
             Vector2Int cellClicked = new Vector2Int(rawCelPos.x, rawCelPos.y);
 
             Debug.Log($"Clicked cell ({cellClicked.x}, {cellClicked.y})");
+            if (_gameState.CurrentMode == GameMode.WaitingForSelection && 
+                IsCellValid(_gameState, cellClicked))
+            {
+                SelectTile(cellClicked);
+            }
         }
     }
 
+    private bool IsCellValid(GameState gameState, Vector2Int cell)
+    {
+        return gameState.SelectableTiles.Contains(cell);
+    }
 
     public void LoadGameState(GameState gameState)
     {
