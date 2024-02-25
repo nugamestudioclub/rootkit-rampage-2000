@@ -1,33 +1,29 @@
 using AStar;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class TurnManager
 {
 
-    private List<string> turnOrder;
-    private int turnIndex;
+    public IList<string> TurnOrder { get; private set;}
+    public  int TurnIndex { get; private set; }
 
     public void StartRound(GameState gameState)
     {
         // get all units
         // put them into the turn order
-        turnOrder = gameState.CurrentUnits.Keys.OrderBy(_ => UnityEngine.Random.Range(0f, 1f)).ToList();
-        turnIndex = 0;
+        TurnOrder = gameState.CurrentUnits.Keys.OrderBy(_ => UnityEngine.Random.Range(0f, 1f)).ToList();
+        TurnIndex = 0;
     }
 
     public void TakeTurn(GameState gameState)
     {
-        string nextUnit = turnOrder[turnIndex];
+        string nextUnit = TurnOrder[TurnIndex];
         switch (gameState.CurrentUnits[nextUnit].Type)
         {
             case ActorType.Player:
-                DoPlayerTurn(nextUnit, gameState);
+                StartPlayerTurn(nextUnit, gameState);
                 
                 break;
             case ActorType.Ally:
@@ -35,19 +31,21 @@ public class TurnManager
                 DoAITurn(nextUnit, gameState);
                 break;
         }
-        turnIndex++;
+        TurnIndex++;
     }
-
-    private void DoPlayerTurn(string charId, GameState gameState)
+    public Actor GetCurrentPlayer(GameState gameState)
+    {
+        return gameState.CurrentUnits[TurnOrder[TurnIndex]];
+    }
+    private void StartPlayerTurn(string charId, GameState gameState)
     {
         //get all abilities
         Actor currentPlayer = gameState.CurrentUnits[charId];
-        ///currentPlayer.
         //this render abilities in UI
         gameState.CurrentMode = GameMode.WaitingForAction;
+        
 
-
-        gameState.CurrentMode = Game
+        
     }
 
     

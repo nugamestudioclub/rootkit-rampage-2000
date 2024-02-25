@@ -21,9 +21,13 @@ public class GameState
     private readonly List<Vector2Int> selectableTiles = new List<Vector2Int>();
     public IList<Vector2Int> SelectableTiles => selectableTiles;
 
-    public Ability SelectedAbility { get; set; }
-
     public Vector2Int SelectedTile { get; set; }
+    
+
+    private readonly List<Ability> selectableAbilities = new List<Ability>();
+    public IList<Ability> SelectableAbilities => selectableAbilities;
+
+    public Ability SelectedAbility { get; set; }
 
     private GameMode currentMode;
     public GameMode CurrentMode
@@ -38,6 +42,8 @@ public class GameState
     public GameMode PreviousMode { get; private set; }
 
     public System.Random Random { get; } = new System.Random();
+
+    public int Round { get; set; }  
     public GameState(Tile[,] map)
     {
         tiles = map;

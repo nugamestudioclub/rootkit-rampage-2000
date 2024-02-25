@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GameStart : MonoBehaviour
 {
+
+
+    //public Start(MapConfig map, IList<ActorConfig> actorConfigs, )
+    //{
+
+    //}
     public GameManager Manager { get; private set; }
     void Awake()
     {
