@@ -1,6 +1,5 @@
 using System;
-﻿using System.Collections.Generic
-using TreeEditor;
+using System.Collections.Generic;
 
 public class GameState
 {
