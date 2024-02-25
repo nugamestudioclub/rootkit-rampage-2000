@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class GameStart : MonoBehaviour
 {
-    //TODO: Add map config 12x8 tile grid
-    
+    //Could be a list for later levels
+    [field: SerializeField]
+    public MapConfig MapConfig { get; private set; }
+
     [field: SerializeField]
     public List<ActorConfig> ActorConfigs { get; private set; }
 
@@ -20,9 +22,11 @@ public class GameStart : MonoBehaviour
     {
         IEnumerable<Actor> actors = ActorConfigs.Select((ac) => ac.Generate());
         IEnumerable<Ability> abilities = AbilityConfigs.Select((ac) => ac.Generate());
-        //ADD MAP, Abilities, and actors to game state
+        GameState initialGameState = new GameState(MapConfig.Generate());
+        UIManager.LoadGameState(initialGameState);
+        //TODO (after jam): Abilities, and actors to game state
         Manager = new GameManager(
-            new GameState(null), //
+            initialGameState,
             new TurnManager(),
             UIManager,
             actors.ToList(),

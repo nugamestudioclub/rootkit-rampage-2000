@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -12,7 +10,7 @@ public class UIManager : MonoBehaviour
 
     private GameState _gameState;
     [SerializeField]
-    private Grid grid;
+    private TileDisplay display;
 
 
     private void Update()
@@ -21,7 +19,7 @@ public class UIManager : MonoBehaviour
         {
             //check tile clicked
             
-            Vector3Int rawCelPos = grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Vector3Int rawCelPos = display.Grid.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             Vector2Int cellClicked = new Vector2Int(rawCelPos.x, rawCelPos.y);
 
             Debug.Log($"Clicked cell ({cellClicked.x}, {cellClicked.y})");
@@ -30,6 +28,7 @@ public class UIManager : MonoBehaviour
             {
                 SelectTile(cellClicked);
             }
+            display.UpdateTiles(_gameState.Tiles);
         }
     }
 
