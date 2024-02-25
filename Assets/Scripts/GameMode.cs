@@ -3,9 +3,13 @@
     Menu,
     WaitingForAction,
     WaitingForSelection,
-    ResolveAction,
+    ResolveEffects,
+    PlayingEffectAnimation,
+    FinishedEffectAnimation,
     StartRound,
     EndRound,
     StartTurn,
     EndTurn,
+    GameOver,
+    Win
 }

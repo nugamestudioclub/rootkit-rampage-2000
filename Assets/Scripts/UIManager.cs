@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     public void SelectTile(Vector2Int selection)
     {
         _gameState.SelectedTile = selection;
-        _gameState.CurrentMode = GameMode.ResolveAction;
+        _gameState.CurrentMode = GameMode.ResolveEffects;
     }
 
     //choose an ability

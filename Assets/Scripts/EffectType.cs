@@ -3,4 +3,5 @@
 [Serializable]
 public enum EffectType {
 	None,
+	Damage,
 }

@@ -27,6 +27,9 @@ public class GameState
     private readonly List<Ability> selectableAbilities = new List<Ability>();
     public IList<Ability> SelectableAbilities => selectableAbilities;
 
+    private readonly List<KeyValuePair<string, Effect>> activeEffects = new List<KeyValuePair<string, Effect>>();
+    public IList<KeyValuePair<string, Effect>> ActiveEffects => activeEffects;
+
     public Ability SelectedAbility { get; set; }
 
     private GameMode currentMode;

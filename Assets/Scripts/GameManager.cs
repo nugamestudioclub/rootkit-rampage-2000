@@ -25,7 +25,6 @@ public class GameManager
         UIManager = uIManager;
         _actors = new List<Actor>(actors);
         _abilities = new List<Ability>(abilities);
-
     }
 
 
@@ -52,9 +51,23 @@ public class GameManager
             case GameMode.WaitingForSelection:
                 //show selectable tiles
                 break;
-            case GameMode.ResolveAction:
+            case GameMode.ResolveEffects:
                 //take all effect triggers and get their outcomes
                 // apply to actors
+                foreach (var effectToApply in GameState.ActiveEffects)
+                {
+                    GameRules.ApplyEffect(effectToApply.Value, GameState.CurrentUnits[effectToApply.Key], GameState);
+                }
+                
+                break;
+            case GameMode.PlayingEffectAnimation:
+                //do UI events for effects
+                break;
+            case GameMode.FinishedEffectAnimation:
+                GameState.ActiveEffects.Clear();
+                //need to do logic if the actor can make any more moves with turn
+                //end turn if wait or no actions possible
+                GameState.CurrentMode = GameMode.EndTurn;
                 break;
             case GameMode.Menu:
                 break;

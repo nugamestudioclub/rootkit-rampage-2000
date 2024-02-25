@@ -13,7 +13,7 @@ public class TurnManager
     {
         // get all units
         // put them into the turn order
-        TurnOrder = gameState.CurrentUnits.Keys.OrderBy(_ => UnityEngine.Random.Range(0f, 1f)).ToList();
+        TurnOrder = gameState.CurrentUnits.Keys.OrderBy(_ => gameState.Random.NextDouble()).ToList();
         TurnIndex = 0;
     }
 
