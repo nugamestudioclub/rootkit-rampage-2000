@@ -2,9 +2,10 @@
 using UnityEngine;
 
 public readonly struct AbilityTrigger {
-	public AbilityTrigger(string casterId, IList<Vector2Int> targets, IList<KeyValuePair<string, EffectTrigger>> effects)
+	public AbilityTrigger(string casterId, Vector2Int selection, IList<Vector2Int> targets, IList<KeyValuePair<string, EffectTrigger>> effects)
 	{
 		CasterId = casterId;
+		Selection = selection;
 		_targets = new List<Vector2Int>(targets);
 		_effects = new List<KeyValuePair<string, EffectTrigger>>(effects);
 	}
@@ -13,8 +14,10 @@ public readonly struct AbilityTrigger {
 	private readonly List<KeyValuePair<string, EffectTrigger>> _effects;
 
 	public readonly string CasterId { get; }
-	//list of tile coordinates which the ability can affect (for rendering in UI)
-	public IList<Vector2Int> Targets => _targets;
+
+    public readonly Vector2Int Selection { get; }
+    //list of tile coordinates which the ability can affect (for rendering in UI)
+    public IList<Vector2Int> Targets => _targets;
 	public IList<KeyValuePair<string, EffectTrigger>> Effects => _effects;
 
 	public bool IsEmpty => Effects.Count == 0;

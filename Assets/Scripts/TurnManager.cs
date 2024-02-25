@@ -2,6 +2,8 @@ using AStar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using UnityEditor.Playables;
 using UnityEngine;
 
 public class TurnManager
@@ -18,10 +20,16 @@ public class TurnManager
         TurnIndex = 0;
     }
 
-    public void TakeTurn(GameState gameState)
+    public void StartTurn(GameState gameState)
     {
         string nextUnit = TurnOrder[TurnIndex];
-        switch (gameState.CurrentUnits[nextUnit].Type)
+        gameState.CurrentMode = GameMode.WaitingForAction;
+        //give player move and action budget
+        Actor currentActor = gameState.CurrentUnits[nextUnit];
+        gameState.CurrentActor = currentActor;
+        gameState.ActorHasMove = true;
+        gameState.ActorHasAction = true;
+        switch (currentActor.Type)
         {
             case ActorType.Player:
                 StartPlayerTurn(nextUnit, gameState);
@@ -38,18 +46,37 @@ public class TurnManager
     {
         return gameState.CurrentUnits[TurnOrder[TurnIndex]];
     }
+
+
+    public void DoMove(string charId, GameState gameState)
+    {
+
+    }
+
+    public void DoAction(string charId, AbilityTrigger chosenAbility, GameState gameState)
+    {
+
+    }
+
+    public void DoWait(string charId, GameState gameState)
+    {
+        EndTurn(gameState);
+    }
+
+    public bool HasActions(GameState gameState)
+    {
+        return gameState.ActorHasAction || gameState.ActorHasMove;
+    }
     private void StartPlayerTurn(string charId, GameState gameState)
     {
-        //get all abilities
-        Actor currentPlayer = gameState.CurrentUnits[charId];
-        //this render abilities in UI
-        gameState.CurrentMode = GameMode.WaitingForAction;
-        
-
         
     }
 
-    
+    public void EndTurn(GameState gameState)
+    {
+        gameState.ActorHasMove = false;
+        gameState.ActorHasAction = false;
+    }
 
     private void DoAITurn(string charId, GameState gameState)
     {

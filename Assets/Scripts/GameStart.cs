@@ -20,9 +20,9 @@ public class GameStart : MonoBehaviour
     {
         IEnumerable<Actor> actors = ActorConfigs.Select((ac) => ac.Generate());
         IEnumerable<Ability> abilities = AbilityConfigs.Select((ac) => ac.Generate());
-        //ADD MAP to game state
+        //ADD MAP, Abilities, and actors to game state
         Manager = new GameManager(
-            new GameState(null),
+            new GameState(null), //
             new TurnManager(),
             UIManager,
             actors.ToList(),

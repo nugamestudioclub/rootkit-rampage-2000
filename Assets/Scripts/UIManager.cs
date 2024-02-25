@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -19,6 +21,12 @@ public class UIManager : MonoBehaviour
     public void SelectTile(Vector2Int selection)
     {
         _gameState.SelectedTile = selection;
+        //get selected ability -> get triggers for that ability at the selected tile
+        IList<AbilityTrigger > triggersForSelectedAbility = 
+            _gameState.SelectableAbilityTriggers
+            .Where((triggers) => triggers.Key.Type == _gameState.SelectedAbility.Type)
+            .First().Value.ToList();
+        _gameState.SelectedAbilityTrigger = triggersForSelectedAbility.Where((trigger) => trigger.Selection == selection).First();
         _gameState.CurrentMode = GameMode.ResolveEffects;
     }
 
@@ -26,6 +34,7 @@ public class UIManager : MonoBehaviour
     public void SelectAbility(int index)
     {
         _gameState.SelectedAbility = _gameState.SelectableAbilities[index];
+        
         _gameState.CurrentMode = GameMode.WaitingForSelection;
     }
 
@@ -39,8 +48,15 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void ShowAbilityMenu(IEnumerable<Ability> ability)
+    public void ShowAbilityMenu(
+        IEnumerable<KeyValuePair<Ability,
+            IEnumerable<AbilityTrigger>>> abilities)
     {
+        throw new NotImplementedException();
+    }
 
+    public void ShowSelectableTiles(IList<Vector2Int> selectableTiles)
+    {
+        throw new NotImplementedException();
     }
 }

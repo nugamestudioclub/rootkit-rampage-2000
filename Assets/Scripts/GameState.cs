@@ -5,52 +5,63 @@ using UnityEngine;
 
 public class GameState
 {
-    private readonly Dictionary<string, Actor> currentUnits = new Dictionary<string, Actor>();
-    public IDictionary<string, Actor> CurrentUnits => currentUnits;
+    private readonly Dictionary<string, Actor> _currentActors = new Dictionary<string, Actor>();
+    public IDictionary<string, Actor> CurrentUnits => _currentActors;
+
+    public Actor CurrentActor { get; set; }
+    public bool ActorHasMove { get; set; }
+    public bool ActorHasAction { get; set; }
+
+    private readonly List<Vector2Int> _selectableTiles = new List<Vector2Int>();
+    public IList<Vector2Int> SelectableTiles => _selectableTiles;
+
+    public Vector2Int SelectedTile { get; set; }
+
+
+
+    private readonly List<Ability> _selectableAbilities = new List<Ability>();
+    public IList<Ability> SelectableAbilities => _selectableAbilities;
+    public Ability SelectedAbility { get; set; }
+
+    private readonly List<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>> _selectableAbilityTriggers
+        = new List<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>>();
+    public IList<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>>
+        SelectableAbilityTriggers => _selectableAbilityTriggers;
+    public AbilityTrigger SelectedAbilityTrigger { get; set; }
+
+    private readonly List<KeyValuePair<string, Effect>> _activeEffects = new List<KeyValuePair<string, Effect>>();
+    public IList<KeyValuePair<string, Effect>> ActiveEffects => _activeEffects;
+
+
+
+
 
     private readonly Tile[,] tiles;
     public Tile[,] Tiles => tiles;
 
-    private readonly float[,] costMap;
+    private readonly float[,] _costMap;
 
-    public float[,] CostMap => costMap;
+    public float[,] CostMap => _costMap;
 
-    private readonly List<string> turnOrder = new List<string>();
-    public IList<string> TurnOrder => turnOrder;
-
-    private readonly List<Vector2Int> selectableTiles = new List<Vector2Int>();
-    public IList<Vector2Int> SelectableTiles => selectableTiles;
-
-    public Vector2Int SelectedTile { get; set; }
-    
-
-    private readonly List<Ability> selectableAbilities = new List<Ability>();
-    public IList<Ability> SelectableAbilities => selectableAbilities;
-
-    private readonly List<KeyValuePair<string, Effect>> activeEffects = new List<KeyValuePair<string, Effect>>();
-    public IList<KeyValuePair<string, Effect>> ActiveEffects => activeEffects;
-
-    public Ability SelectedAbility { get; set; }
-
-    private GameMode currentMode;
+    private GameMode _currentMode;
     public GameMode CurrentMode
     {
-        get => currentMode;
+        get => _currentMode;
         set
         {
             PreviousMode = CurrentMode;
-            currentMode = value;
+            _currentMode = value;
         }
     }
     public GameMode PreviousMode { get; private set; }
 
     public System.Random Random { get; } = new System.Random();
 
-    public int Round { get; set; }  
+    public int Round { get; set; }
     public GameState(Tile[,] map)
     {
         tiles = map;
-        costMap = MakeCostMap();
+        _costMap = MakeCostMap();
     }
 
     private float[,] MakeCostMap()
@@ -61,7 +72,7 @@ public class GameState
         {
             for (int j = 0; j < costMap.GetLength(1); j++)
             {
-                switch (tiles[i,j])
+                switch (tiles[i, j])
                 {
                     case Tile.Basic:
                         costMap[i, j] = 1;

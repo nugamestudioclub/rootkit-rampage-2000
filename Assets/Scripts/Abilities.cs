@@ -38,11 +38,12 @@ public static class Abilities
 
             }
         }
-        return new AbilityTrigger(context.CasterId, targets, effects);
+        return new AbilityTrigger(context.CasterId, context.Selection, targets, effects);
     }
 
     public static IEnumerable<AbilityTrigger> GetAbilityTriggers(GameState state, string charId, Ability ability)
     {
+        //maybe move state modification to what invokes this rather than here?
         state.SelectedAbility = ability;
         state.SelectableTiles.Clear();
         IList<AbilityTrigger> abilityTriggers = new List<AbilityTrigger>();
