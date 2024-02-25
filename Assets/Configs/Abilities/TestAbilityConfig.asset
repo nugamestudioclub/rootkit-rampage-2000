@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b984eea7706c4a545bce18f819f8466f, type: 3}
   m_Name: TestAbilityConfig
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: 
-  <Accuracy>k__BackingField: 0
+  <Name>k__BackingField: TestAbility
+  <Type>k__BackingField: 0
+  <Accuracy>k__BackingField: 0.85
   <EnergyCost>k__BackingField: 0
-  <Range>k__BackingField: 0
-  <EffectTriggers>k__BackingField: []
-  <Tags>k__BackingField: []
+  <Range>k__BackingField: 1
+  <EffectTriggers>k__BackingField:
+  - {fileID: 11400000, guid: c7a687fc77bb33c4b9b8cadd26d83a70, type: 2}
+  <Tags>k__BackingField:
+  - Blunt
+  - Drain

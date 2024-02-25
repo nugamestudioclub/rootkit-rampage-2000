@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class GameState
 {
@@ -23,9 +24,13 @@ public class GameState
         }
     }
     public GameMode PreviousMode { get; private set; }
+
+    public Random Random { get; } = new Random();
     public GameState(Tile[][] map)
     {
         tiles = map;
     }
+
+
 
 }

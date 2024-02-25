@@ -18,6 +18,10 @@ public class EffectTriggerConfig : ScriptableObject
 
     [field: Range(0, 1)]
     [field: SerializeField]
+    public float Accuracy { get; private set; }
+
+    [field: Range(0, 1)]
+    [field: SerializeField]
     public float Chance { get; private set; }
 
     [field: SerializeField]
@@ -28,6 +32,6 @@ public class EffectTriggerConfig : ScriptableObject
 
     public EffectTrigger Generate()
     {
-        return new EffectTrigger(Type, Tags, Damage, DamageVariance, Chance);
+        return new EffectTrigger(Type, Tags, Damage, DamageVariance, Accuracy, Chance);
     }
 }

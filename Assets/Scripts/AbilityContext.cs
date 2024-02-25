@@ -1,12 +1,19 @@
 ﻿public readonly struct AbilityContext {
-	// TODO: add constructor
+	public AbilityContext(GameState gameState, string casterId, Ability ability)
+	{
+		_gameState = gameState;
+		_casterId = casterId;
+		_ability = ability;
+	}
+
+
 	private readonly GameState _gameState;
-
-	public GameState GameState => _gameState;
-
 	private readonly string _casterId;
+	private readonly Ability _ability;
 
-	public string CasterId => _casterId;
 
-	// TODO: add other game state
+    public GameState GameState => _gameState;
+    public string CasterId => _casterId;
+	public Ability Ability => _ability;
+
 }

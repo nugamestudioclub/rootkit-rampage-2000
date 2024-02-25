@@ -17,7 +17,7 @@ MonoBehaviour:
   <Energy>k__BackingField: 2
   <Movement>k__BackingField: 3
   <Abilities>k__BackingField:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 3f8ccf02cde2eab45a13971ac8d5ab2d, type: 2}
   <Tags>k__BackingField:
   - Virus
   - Malware

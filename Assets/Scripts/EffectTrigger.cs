@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 
 public readonly struct EffectTrigger {
-	public EffectTrigger(EffectType type, IList<string> tags, int damage, float damageVariance, float chance)
+	public EffectTrigger(EffectType type, IList<string> tags, int damage, float damageVariance, float accuracy, float chance)
 	{
 		_type = type;
 		_tags = new List<string>(tags);
 		_damage = damage;
 		_damageVariance = damageVariance;
+		_accuracy = accuracy;
 		_chance = chance;
 	}
 
@@ -14,6 +15,7 @@ public readonly struct EffectTrigger {
 	private readonly List<string> _tags;
 	private readonly int _damage;
 	private readonly float _damageVariance;
+	private readonly float _accuracy;
 	private readonly float _chance;
 
 	public EffectType Type => _type;
@@ -24,5 +26,6 @@ public readonly struct EffectTrigger {
 
 	public float DamageVariance => _damageVariance;
 
-	public float Chance => _chance;
+    public float Accuracy => _accuracy;
+    public float Chance => _chance;
 }

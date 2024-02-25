@@ -1,3 +1,5 @@
 ﻿public enum AbilityType {
-	None,
+	Basic,
+	Fireball,
+	Clippy,
 }
