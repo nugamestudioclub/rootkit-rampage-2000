@@ -57,14 +57,14 @@ public class TurnManager
         Actor curActor = gameState.CurrentUnits[charId];
         // TODO recognize movement penalties
         IList<Ability> abilityList = curActor.Abilities;
-        (AbilityTrigger, string)? attackData;
+        AbilityTrigger attackData;
         attackData = TryAIAttack(curActor, gameState, abilityList[1]);
-        if (attackData == null)
+        if (attackData.IsEmpty)
         {
             attackData = TryAIAttack(curActor, gameState, abilityList[0]);
         }
 
-        if (attackData != null)
+        if (!attackData.IsEmpty)
         {
             // TODO do attack
         }

@@ -16,4 +16,6 @@ public readonly struct AbilityTrigger {
 	//list of tile coordinates which the ability can affect (for rendering in UI)
 	public IList<Vector2Int> Targets => _targets;
 	public IList<KeyValuePair<string, EffectTrigger>> Effects => _effects;
+
+	public bool IsEmpty => Effects.Count == 0;
 }
