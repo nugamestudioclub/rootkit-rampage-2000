@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public static class Abilities
@@ -37,18 +38,21 @@ public static class Abilities
 
             }
         }
-        return new AbilityTrigger(targets, effects);
+        return new AbilityTrigger(context.CasterId, targets, effects);
     }
 
-    public static void ChooseAbility(GameState state, string charId, Ability ability)
+    public static IEnumerable<AbilityTrigger> GetAbilityTriggers(GameState state, string charId, Ability ability)
     {
         state.SelectedAbility = ability;
         state.SelectableTiles.Clear();
+        IList<AbilityTrigger> abilityTriggers = new List<AbilityTrigger>();
+
         foreach (Vector2Int selection in FindValidSelections(state, charId, ability)) {
             state.SelectableTiles.Add(selection);
+            AbilityTrigger trigger = Resolve(new AbilityContext(state, charId, selection, ability));
+            abilityTriggers.Add(trigger);
         }
-        
-        
+        return abilityTriggers;
     }
 
     public static IEnumerable<Vector2Int> FindValidSelections(GameState state, string casterId, Ability abilty)

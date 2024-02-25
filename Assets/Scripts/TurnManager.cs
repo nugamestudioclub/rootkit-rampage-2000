@@ -1,4 +1,5 @@
 using AStar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -74,17 +75,20 @@ public class TurnManager
         }
     }
 
-    private (AbilityTrigger, string)? TryAIAttack(Actor actor, GameState gameState, Ability ability)
+    private AbilityTrigger TryAIAttack(Actor actor, GameState gameState, Ability ability)
     {
         // TODO recognize movement penalties
         (int, int)[] path = GetClosestPath(actor.Id, gameState, ActorType.Player);
         if (actor.Movement + ability.Range <= path.Length)
         {
             actor.Move(new Vector2Int(path[path.Length].Item1, path[path.Length].Item2));
-            AbilityTrigger trigger = Abilities.Resolve(new AbilityContext(gameState, actor.Id, ability));
-            return (trigger, trigger.Effects[0].Key);
+            // new ability context needs the selected tile
+            IList<AbilityTrigger> abilityTriggers = Abilities.GetAbilityTriggers(gameState, actor.Id, ability).ToList();
+
+
+
         }
-        else return null;
+        return new AbilityTrigger();
     }
 
     private (int, int)[] GetClosestPath(string charId, GameState gameState, ActorType type)
