@@ -94,6 +94,7 @@ public class TurnManager
         if (!attackData.IsEmpty)
         {
             // TODO do attack
+            DoAction(charId, attackData, gameState);
         }
         else
         {
