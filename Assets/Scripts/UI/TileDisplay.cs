@@ -50,13 +50,12 @@ public class TileDisplay : MonoBehaviour
                 
                 GameObject backgroundObject = new GameObject($"BackGround");
                 SpriteRenderer bgSpriteRenderer = backgroundObject.AddComponent<SpriteRenderer>();
-                bgSpriteRenderer.sprite = tileBackground;
+                //bgSpriteRenderer.sprite = tileBackground;
 
                 backgroundObject.transform.parent = parentObject.transform;
 
-                Instantiate(parentObject, transform);
-                
-                parentObject.transform.position = grid.CellToWorld(new Vector3Int(i, j, 0));
+
+                parentObject.transform.position = grid.GetCellCenterWorld(new Vector3Int(i, j, 0));
 
                 tileObjects[i, j] = parentObject;
             }

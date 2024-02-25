@@ -110,6 +110,7 @@ RectTransform:
   - {fileID: 6985411587021088428}
   - {fileID: 4964201471496516064}
   - {fileID: 7415377122462313535}
+  - {fileID: 4335472719110380370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
@@ -305,6 +306,69 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2526949988868559841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4335472719110380370}
+  - component: {fileID: 1511845025816183151}
+  - component: {fileID: 2233688621135859057}
+  m_Layer: 0
+  m_Name: TileDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4335472719110380370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2526949988868559841}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1460.9, y: -1009.7, z: -9716.377}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8984300458995889127}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!156049354 &1511845025816183151
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2526949988868559841}
+  m_Enabled: 1
+  m_CellSize: {x: 120, y: 120, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
+--- !u!114 &2233688621135859057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2526949988868559841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a89539256a33f1e4c87973fa19333e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 1511845025816183151}
+  selectColor: {r: 0, g: 1, b: 0.21163177, a: 0}
+  moveColor: {r: 0.06111298, g: 0.3534641, b: 0.9716981, a: 0}
+  actColor: {r: 1, g: 0, b: 0, a: 0}
+  tileUi: {fileID: 21300000, guid: c0b2ccece2b46b247b1b3b0c2b8c0a87, type: 3}
+  tileBackground: {fileID: 21300000, guid: c0b2ccece2b46b247b1b3b0c2b8c0a87, type: 3}
 --- !u!1 &3708815502399413854
 GameObject:
   m_ObjectHideFlags: 0
