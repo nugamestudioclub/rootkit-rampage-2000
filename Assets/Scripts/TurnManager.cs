@@ -28,6 +28,7 @@ public class TurnManager
         {
             case ActorType.Player:
                 DoPlayerTurn(nextUnit, gameState);
+                
                 break;
             case ActorType.Ally:
             case ActorType.AI:
@@ -39,8 +40,17 @@ public class TurnManager
 
     private void DoPlayerTurn(string charId, GameState gameState)
     {
+        //get all abilities
+        Actor currentPlayer = gameState.CurrentUnits[charId];
+        ///currentPlayer.
+        //this render abilities in UI
+        gameState.CurrentMode = GameMode.WaitingForAction;
 
+
+        gameState.CurrentMode = Game
     }
+
+    
 
     private void DoAITurn(string charId, GameState gameState)
     {

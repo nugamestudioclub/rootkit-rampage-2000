@@ -1,19 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.PackageManager;
 using UnityEngine;
-
-/*public interface Ability {
-	AbilityType Type { get; }
-
-	AbilityOutcome Cast(AbilityContext context);
-}
-*/
 
 public static class Abilities
 {
+    public static IEnumerable<KeyValuePair<AbilityContext, AbilityTrigger>> 
+        ResolveAll(IEnumerable<AbilityContext> contexts)
+    {
+        foreach (var context in contexts) {
+            yield return new(context, Resolve(context));
+        }
+    }
     public static AbilityTrigger Resolve(AbilityContext context)
     {
         return context.Ability.Type switch
@@ -29,7 +26,7 @@ public static class Abilities
     private static AbilityTrigger ResolveBasic(AbilityContext context)
     {
         IList<Vector2Int> targets = FindTargetsInRange(context);
-        IList<Actor> actors = FindActorsAtTargets(targets, context);
+        IList<Actor> actors = GameState.FindActorsAtPositions(targets, context.GameState);
         IList<KeyValuePair<string, EffectTrigger>> effects = new List<KeyValuePair<string, EffectTrigger>>();
 
         foreach (Actor actor in actors)
@@ -43,14 +40,45 @@ public static class Abilities
         return new AbilityTrigger(targets, effects);
     }
 
+    public static void ChooseAbility(GameState state, string charId, Ability ability)
+    {
+        state.SelectedAbility = ability;
+        state.SelectableTiles.Clear();
+        foreach (Vector2Int selection in FindValidSelections(state, charId, ability)) {
+            state.SelectableTiles.Add(selection);
+        }
+        
+        
+    }
+
+    public static IEnumerable<Vector2Int> FindValidSelections(GameState state, string casterId, Ability abilty)
+    {
+        Vector2Int casterLocation = state.CurrentUnits[casterId].Position;
+        Tile[,] board = state.Tiles;
+        IList<Vector2Int> selections = new List<Vector2Int>();
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int j = 0; j < board.GetLength(1); i++)
+            {
+                //tile is valid and is in range
+
+                if ((casterLocation.x - i * casterLocation.x - i) + (casterLocation.y - j * casterLocation.y - j) <= abilty.Range * abilty.Range)
+                {
+                    selections.Add(new Vector2Int(i, j));
+                }
+            }
+        }
+        return selections;
+    }
+
     private static IList<Vector2Int> FindTargetsInRange(AbilityContext context)
     {
         Vector2Int casterLocation = context.GameState.CurrentUnits[context.CasterId].Position;
-        Tile[][] board = context.GameState.Tiles;
+        Tile[,] board = context.GameState.Tiles;
         IList<Vector2Int> targets = new List<Vector2Int>();
         for (int i = 0; i < board.GetLength(0); i++)
         {
-            for (int j = 0; j < board.GetLength(0); i++)
+            for (int j = 0; j < board.GetLength(1); i++)
             {
                 //tile is valid and is in range
 
@@ -62,11 +90,5 @@ public static class Abilities
         }
         return targets;
     }
-    private static IList<Actor> FindActorsAtTargets(IList<Vector2Int> targets, AbilityContext context)
-    {
-        return context.GameState.CurrentUnits
-            .Where((cu) => targets.Contains(cu.Value.Position))
-            .Select((p) => p.Value)
-            .ToList();
-    }
+   
 }
