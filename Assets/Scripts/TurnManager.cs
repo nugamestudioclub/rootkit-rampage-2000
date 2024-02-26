@@ -17,18 +17,20 @@ public class TurnManager
         // get all units
         // put them into the turn order
         
-        TurnOrder = gameState.CurrentUnits.Keys.OrderBy(_ => gameState.Random.NextDouble()).ToList();
+        TurnOrder = gameState.CurrentActors.Keys.OrderBy(_ => gameState.Random.NextDouble()).ToList();
         TurnIndex = 0;
         gameState.CurrentMode = GameMode.StartTurn;
     }
 
     public void StartTurn(GameState gameState)
     {
-        Debug.Log(TurnOrder.Count);
         string nextUnit = TurnOrder[TurnIndex];
         gameState.CurrentMode = GameMode.WaitingForAction;
         //give player move and action budget
-        Actor currentActor = gameState.CurrentUnits[nextUnit];
+        Actor currentActor = gameState.CurrentActors[nextUnit];
+
+        Debug.Log($"Current Actor in StartTurn: {currentActor.Id}");
+
         gameState.CurrentActor = currentActor;
         gameState.ActorHasMove = true;
         gameState.ActorHasAction = true;
@@ -36,18 +38,18 @@ public class TurnManager
         {
             case ActorType.Player:
                 StartPlayerTurn(nextUnit, gameState);
-
                 break;
             case ActorType.Ally:
             case ActorType.AI:
-                DoAITurn(nextUnit, gameState);
+                //DoAITurn(nextUnit, gameState);
+                StartPlayerTurn(nextUnit, gameState);
                 break;
         }
         TurnIndex++;
     }
     public Actor GetCurrentPlayer(GameState gameState)
     {
-        return gameState.CurrentUnits[TurnOrder[TurnIndex]];
+        return gameState.CurrentActors[TurnOrder[TurnIndex]];
     }
 
 
@@ -84,7 +86,7 @@ public class TurnManager
     private void DoAITurn(string charId, GameState gameState)
     {
         (int, int)[] path = GetClosestPath(charId, gameState, ActorType.Player);
-        Actor curActor = gameState.CurrentUnits[charId];
+        Actor curActor = gameState.CurrentActors[charId];
         // TODO recognize movement penalties
         IList<Ability> abilityList = curActor.Abilities;
         AbilityTrigger attackData;
@@ -124,7 +126,7 @@ public class TurnManager
 
     private (int, int)[] GetClosestPath(string charId, GameState gameState, ActorType type)
     {
-        IDictionary<string, Actor> curUnits = gameState.CurrentUnits;
+        IDictionary<string, Actor> curUnits = gameState.CurrentActors;
         Actor curActor = curUnits[charId];
         (int, int)[] shortestPath = null;
         foreach ((string key, Actor value) in curUnits)

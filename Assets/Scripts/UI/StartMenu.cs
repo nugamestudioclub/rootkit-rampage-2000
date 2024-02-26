@@ -8,7 +8,7 @@ public class StartMenu : MonoBehaviour {
 	[SerializeField]
 	private bool _isOpen;
 
-	public bool IsOpen => _isOpen;
+	public bool IsOpen { get => _isOpen; private set => _isOpen = value; }
 
 	[SerializeField]
 	private Transform _list;
@@ -52,12 +52,20 @@ public class StartMenu : MonoBehaviour {
 
 	public void Close() {
 		if( IsOpen )
-			transform.position += _offset;
+		{
+            transform.position += _offset;
+            IsOpen = false;
+        }
+			
 	}
 
 	public void Open() {
-		if( !IsOpen )
-			transform.position -= _offset;
+		if( !IsOpen)
+		{
+            transform.position -= _offset;
+			IsOpen = true;
+        }
+			
 	}
 
 	public event EventHandler<int> Clicked;

@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7a49339b9d103244a01847db1ccd498, type: 3}
-  m_Name: RedVirus
+  m_Name: rootkit_b
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Red Virus
+  <Name>k__BackingField: rootkit_b
   <Health>k__BackingField: 5
   <Energy>k__BackingField: 2
   <Movement>k__BackingField: 3
   <Abilities>k__BackingField:
   - {fileID: 11400000, guid: dcab8946466197142aef576144e11514, type: 2}
-  - {fileID: 11400000, guid: 0d19133a264138a49b529b07e5c3f865, type: 2}
+  - {fileID: 11400000, guid: ee3db035d8a7c0b48b53ac85426d2783, type: 2}
+  - {fileID: 11400000, guid: e12bbb8d16509b64dae1b782bd1b00d3, type: 2}
+  - {fileID: 11400000, guid: 2429d44a44fd09c4483861b567b73f1f, type: 2}
   <Tags>k__BackingField:
   - Virus
   - Malware

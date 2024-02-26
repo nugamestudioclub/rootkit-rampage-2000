@@ -1,27 +1,42 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using UnityEngine;
 
+//TODO: Make a ReadOnlyGameState which cant be modified to use with functions
 public class GameState
 {
+    //essentially if we need to wait for user input or some timed event
+    //like an animation, set this to false
+    //once waiting is over we can tick again
+    public bool ReadyToTick { get; set; } = true;
+
     private readonly Dictionary<string, Actor> _currentActors = new Dictionary<string, Actor>();
-    public IDictionary<string, Actor> CurrentUnits => _currentActors;
+    public IDictionary<string, Actor> CurrentActors => _currentActors;
 
     public Actor CurrentActor { get; set; }
     public bool ActorHasMove { get; set; }
     public bool ActorHasAction { get; set; }
 
-    private readonly List<Vector2Int> _selectableTiles = new List<Vector2Int>();
-    public IList<Vector2Int> SelectableTiles => _selectableTiles;
+
 
     public Vector2Int SelectedTile { get; set; }
 
-
-
     private readonly List<Ability> _selectableAbilities = new List<Ability>();
     public IList<Ability> SelectableAbilities => _selectableAbilities;
+
+    private readonly Dictionary<Ability, IEnumerable<Vector2Int>> _selectableAbilityTiles = new Dictionary<Ability, IEnumerable<Vector2Int>>();
+    public IDictionary<Ability, IEnumerable<Vector2Int>> SelectableAbilityTiles => _selectableAbilityTiles;
+
     public Ability SelectedAbility { get; set; }
+
+    public IList<Vector2Int> SelectableTiles  {
+        get
+        {
+            return SelectableAbilityTiles[SelectedAbility].ToList();
+        }
+     }
 
     private readonly List<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>> _selectableAbilityTriggers
         = new List<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>>();
@@ -51,6 +66,8 @@ public class GameState
         {
             PreviousMode = CurrentMode;
             _currentMode = value;
+            Debug.Log($"Game Mode Updated from {Enum.GetName(typeof(GameMode), PreviousMode)} to " +
+                $"{Enum.GetName(typeof(GameMode), CurrentMode)}");
         }
     }
     public GameMode PreviousMode { get; private set; }
@@ -67,8 +84,9 @@ public class GameState
         foreach (KeyValuePair<string, Actor> idToActor in startingUnits)
         {
             IDictionary<string, Vector2Int> spawnPosDictmap = new Dictionary<string, Vector2Int>(Map.SpawnPositions);
-            idToActor.Value.Move(spawnPosDictmap[idToActor.Key]);
+            idToActor.Value.Spawn(idToActor.Key, ActorType.Player, spawnPosDictmap[idToActor.Key]);
         }
+
     }
 
     private float[,] MakeCostMap()
@@ -93,7 +111,7 @@ public class GameState
 
     public static IList<Actor> FindActorsAtPositions(IList<Vector2Int> positions, GameState gameState)
     {
-        return gameState.CurrentUnits
+        return gameState.CurrentActors
             .Where((cu) => positions.Contains(cu.Value.Position))
             .Select((p) => p.Value)
             .ToList();

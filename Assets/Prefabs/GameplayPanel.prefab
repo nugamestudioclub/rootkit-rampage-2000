@@ -369,6 +369,8 @@ MonoBehaviour:
   actColor: {r: 1, g: 0, b: 0, a: 1}
   tileUi: {fileID: 21300000, guid: c0b2ccece2b46b247b1b3b0c2b8c0a87, type: 3}
   tileBackground: {fileID: 21300000, guid: 988a031afc7bad2478b5e9d8cceb30ee, type: 3}
+  actorPrefabs: []
+  actorTypes: 00000000
 --- !u!1 &3708815502399413854
 GameObject:
   m_ObjectHideFlags: 0

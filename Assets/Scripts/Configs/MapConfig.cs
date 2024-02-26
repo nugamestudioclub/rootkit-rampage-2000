@@ -49,8 +49,8 @@ public class MapConfig : ScriptableObject
             idsToActors.Add(new KeyValuePair<string, Actor>(actorId, spawns.ActorConfig.Generate()));
             idsToSpawnsPositions.Add(new KeyValuePair<string, Vector2Int>(actorId, spawns.Position));
         }
-        return (new Map(Name, Width, Height, GenerateTiles(), idsToSpawnsPositions.ToList()), 
-            idsToActors.ToList());
+        return (new Map(Name, Width, Height, GenerateTiles(), idsToSpawnsPositions), 
+            idsToActors);
     }
     public Tile[,] GenerateTiles()
     {

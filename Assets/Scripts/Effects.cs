@@ -6,7 +6,7 @@ public static class Effects
 {
     public static Effect Resolve(KeyValuePair<string, EffectTrigger> idToEffect, GameState gameState)
     {
-        Actor effectRecipient = gameState.CurrentUnits[idToEffect.Key];
+        Actor effectRecipient = gameState.CurrentActors[idToEffect.Key];
         return idToEffect.Value.Type switch
         {
             EffectType.Damage => ResolveDamage(idToEffect.Value, effectRecipient, gameState),

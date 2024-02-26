@@ -27,7 +27,6 @@ public class GameStart : MonoBehaviour
         IEnumerable<(Ability, Sprite)> abilities = AbilityConfigs.Select((ac) => ac.Generate());
         (Map startingMap, IEnumerable<KeyValuePair<string, Actor>> actorsToids) = MapConfig.Generate();
         Dictionary<string, Actor> actorDict = new Dictionary<string, Actor>();
-        Debug.Log(actorsToids.ToList().Count);
         foreach (KeyValuePair<string, Actor> actor in actorsToids)
         {
             actorDict.Add(actor.Key, actor.Value);

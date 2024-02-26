@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class TileDisplay : MonoBehaviour
 {
+    /*
+     * TODO: 
+     * - Change the logic of this class to mutate objects instead of repopulating each time
+     * - Make sure ordering of sprite layers is set
+     */
+
+
     [SerializeField]
     private Grid grid;
     public Grid Grid => grid;
@@ -22,17 +29,16 @@ public class TileDisplay : MonoBehaviour
 
     private GameObject[,] parentObjects;
 
-    //these are paralel arrays
+    //these are parallel arrays
     [SerializeField]
     private List<GameObject> actorPrefabs;
     [SerializeField]
-    private List<ActorType> actorTypes;
+    private List<string> actorNames;
 
     private GameObject[,] actorObjects;
 
     private GameObject GetTileObject(int x, int y)
     {
-        //Debug.Break();
         return parentObjects[x, y].transform.GetChild(0).gameObject;
     }
 
@@ -45,6 +51,7 @@ public class TileDisplay : MonoBehaviour
     {
         //will want to support movement/actions
         //so it may make more sense to do this through an "process effect" method
+        //TODO add helpers for getting the position of a center tile
         if (parentObjects != null)
         {
             CleanUpActors();
@@ -54,16 +61,23 @@ public class TileDisplay : MonoBehaviour
             GameObject parentObject = GetActorObject(actorPos.Value.x, actorPos.Value.y);
             //get actor type from the pair, then spawn the prefab at the
             //same index of that type in the types array
-            ActorType type = actorPos.Key.Type;
-            int actorIndex = actorTypes.IndexOf(type);
+            string name = actorPos.Key.Name;
+            int actorIndex = actorNames.IndexOf(name);
+
             if (actorIndex < 0 || actorIndex >= actorPrefabs.Count)
             {
-                Debug.Log($"Could not find actor at index: {actorIndex}");
+                Debug.Log($"Could not find actor at index: {actorIndex}, looking for {name}");
+                foreach(string an in actorNames)
+                {
+                    Debug.Log($"{an}");
+                }
             }
             else
             {
                 GameObject actorPrefab = actorPrefabs[actorIndex];
-                Instantiate(actorPrefab, parentObject.transform);
+                GameObject instance = Instantiate(actorPrefab, parentObject.transform);
+                instance.transform.localPosition = Vector3.zero;
+                instance.transform.localScale = Vector3.one;
             }
             
 
