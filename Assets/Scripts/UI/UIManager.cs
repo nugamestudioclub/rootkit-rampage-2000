@@ -78,10 +78,14 @@ public class UIManager : MonoBehaviour
     {
         _gameState.SelectedTile = selection;
         //get selected ability -> get triggers for that ability at the selected tile
+
+        Debug.Log($"SelectableAbilityTriggers count{_gameState.SelectableAbilityTriggers.Count}");
+
         IList<AbilityTrigger> triggersForSelectedAbility =
             _gameState.SelectableAbilityTriggers
             .Where((triggers) => triggers.Key.Type == _gameState.SelectedAbility.Type)
             .First().Value.ToList();
+        Debug.Log($"triggersForSelectedAbility count{triggersForSelectedAbility.Count}");
         _gameState.SelectedAbilityTrigger = triggersForSelectedAbility.Where((trigger) => trigger.Selection == selection).First();
         _gameState.CurrentMode = GameMode.ResolveEffects;
         _gameState.ReadyToTick = true;

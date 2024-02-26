@@ -92,8 +92,8 @@ public class GameManager
 
     private void DoWaitingForAction()
     {
-        IList<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>> abilitiesToTriggers
-                    = new List<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>>();
+       // IList<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>> abilitiesToTriggers
+         //           = new List<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>>();
         Actor currentPlayer = GameState.CurrentActor;
         foreach (Ability ability in currentPlayer.Abilities)
         {
@@ -108,12 +108,13 @@ public class GameManager
                 Abilities.FindValidSelections(GameState, currentPlayer.Id, ability)
                 );
             IList<AbilityTrigger> abilityTriggers = Abilities.GetAbilityTriggers(GameState, GameState.CurrentActor.Id, ability).ToList();
-            abilitiesToTriggers.Add(
+            GameState.SelectableAbilityTriggers.Add(
                 new KeyValuePair<Ability, IEnumerable<AbilityTrigger>>(ability, abilityTriggers));
+            
         }
         if (currentPlayer.Type == ActorType.Player)
         {
-            UIManager.ShowAbilityMenu(abilitiesToTriggers);
+            UIManager.ShowAbilityMenu(GameState.SelectableAbilityTriggers);
         }
         GameState.ReadyToTick = false;
     }
@@ -134,18 +135,27 @@ public class GameManager
 
     private void DoResolveEffects()
     {
-        GameState.SelectableAbilities.Clear();
-        GameState.SelectableAbilityTiles.Clear();
+
         //set active effects with selected tile and selected action
 
 
         //take all effect triggers and get their outcomes
         // apply to actors
+        Debug.Log($"GameState.ActiveEffects.Count:{ GameState.ActiveEffects.Count}");
         foreach (var effectToApply in GameState.ActiveEffects)
         {
             GameRules.ApplyEffect(effectToApply.Value, GameState.CurrentActors[effectToApply.Key], GameState);
         }
-
+        //TODO: Need to update tiles accordingly
+        foreach (Vector2Int pos in GameState.SelectableTiles)
+        {
+            Tile currentTile = GameState.Tiles[pos.x, pos.y];
+            GameState.Tiles[pos.x, pos.y] = new Tile(currentTile.Type, TileUIState.None);
+        }
+        UIManager.UpdateTiles(GameState.Tiles);
+        GameState.SelectableAbilities.Clear();
+        GameState.SelectableAbilityTiles.Clear();
+        GameState.SelectableAbilityTriggers.Clear();
         GameState.ReadyToTick = true;
     }
 

@@ -5,10 +5,11 @@ using UnityEngine;
 
 public static class Abilities
 {
-    public static IEnumerable<KeyValuePair<AbilityContext, AbilityTrigger>> 
+    public static IEnumerable<KeyValuePair<AbilityContext, AbilityTrigger>>
         ResolveAll(IEnumerable<AbilityContext> contexts)
     {
-        foreach (var context in contexts) {
+        foreach (var context in contexts)
+        {
             yield return new(context, Resolve(context));
         }
     }
@@ -36,7 +37,6 @@ public static class Abilities
             foreach (EffectTrigger trigger in context.Ability.EffectTriggers)
             {
                 effects.Add(new KeyValuePair<string, EffectTrigger>(actor.Id, trigger));
-
             }
         }
         return new AbilityTrigger(context.CasterId, context.Selection, targets, effects);
@@ -49,7 +49,8 @@ public static class Abilities
         //state.SelectableTiles.Clear();
         IList<AbilityTrigger> abilityTriggers = new List<AbilityTrigger>();
 
-        foreach (Vector2Int selection in FindValidSelections(state, charId, ability)) {
+        foreach (Vector2Int selection in FindValidSelections(state, charId, ability))
+        {
             //state.SelectableTiles.Add(selection);
             AbilityTrigger trigger = Resolve(new AbilityContext(state, charId, selection, ability));
             abilityTriggers.Add(trigger);
@@ -60,13 +61,13 @@ public static class Abilities
 
     private static bool InRange(Vector2Int startPoint, Vector2Int endPoint, float distance)
     {
-        return (startPoint.x - endPoint.x) * (startPoint.x - endPoint.x) 
-            + (startPoint.y - endPoint.y) * (startPoint.y - endPoint.y) 
+        return (startPoint.x - endPoint.x) * (startPoint.x - endPoint.x)
+            + (startPoint.y - endPoint.y) * (startPoint.y - endPoint.y)
             <= distance * distance;
     }
     public static IEnumerable<Vector2Int> FindValidSelections(GameState state, string casterId, Ability abilty)
     {
-        
+
         Vector2Int casterLocation = state.CurrentActors[casterId].Position;
         Tile[,] board = state.Tiles;
         IList<Vector2Int> selections = new List<Vector2Int>();
@@ -76,7 +77,7 @@ public static class Abilities
             {
                 //tile is valid and is in range
 
-                if (InRange(casterLocation, new Vector2Int(i,j), abilty.Range))
+                if (InRange(casterLocation, new Vector2Int(i, j), abilty.Range))
                 {
                     selections.Add(new Vector2Int(i, j));
                 }
@@ -105,5 +106,5 @@ public static class Abilities
         }
         return targets;
     }
-   
+
 }

@@ -31,12 +31,15 @@ public class GameState
 
     public Ability SelectedAbility { get; set; }
 
-    public IList<Vector2Int> SelectableTiles  {
+    public IList<Vector2Int> SelectableTiles
+    {
         get
         {
-            return SelectableAbilityTiles[SelectedAbility].ToList();
+            return SelectableAbilityTiles.TryGetValue(SelectedAbility, out var tiles) 
+                ? tiles.ToList() 
+                : new List<Vector2Int>();
         }
-     }
+    }
 
     private readonly List<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>> _selectableAbilityTriggers
         = new List<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>>();
@@ -46,9 +49,9 @@ public class GameState
 
     private readonly List<KeyValuePair<string, Effect>> _activeEffects = new List<KeyValuePair<string, Effect>>();
     public IList<KeyValuePair<string, Effect>> ActiveEffects => _activeEffects;
+    //the selected abilities triggers should be the active ones
 
-
-    public Map Map {get; private set;}
+    public Map Map { get; private set; }
 
 
     private readonly Tile[,] tiles;
