@@ -103,12 +103,10 @@ public class UIManager : MonoBehaviour
     public void ShowAbilityMenu(IEnumerable<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>> abilities)
     {
         _startMenu.Clear();
-        foreach (var (ability, _) in abilities)
-        {
-            _startMenu.AddItem(
-                ability.Name,
-                ActiveSprites.FirstOrDefault(x => x.Key == ability.Type).Value
-            );
+        foreach( var (ability, trigger) in abilities ) {
+            bool interactable = trigger.Any();
+            var sprite = ActiveSprites.FirstOrDefault(x => x.Key == ability.Type).Value;
+            _startMenu.AddItem(ability.Name, sprite, interactable);
         }
         OpenAbilityMenu();
     }
