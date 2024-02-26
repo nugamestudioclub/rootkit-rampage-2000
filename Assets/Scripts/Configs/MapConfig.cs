@@ -66,23 +66,5 @@ public class MapConfig : ScriptableObject
 
         return map;
     }
-    /*
-    public GameState GenerateNextGameState(List<Actor> players)
-    {
-        GameState state = new GameState(GenerateTiles());
-        for (int i = 0; i < PlayerSpawns.Count && i < players.Count; i++)
-        {
-            players[i].Spawn(players[i].Id, ActorType.Player, PlayerSpawns[i].Position);
-            state.CurrentUnits.Add(players[i].Id, players[i]);
-        }
-        for (int i = 0; i < EnemySpawns.Count; i++)
-        {
-            ActorPositionData enemyData = EnemySpawns[i];
-            Actor enemyActor = enemyData.ActorConfig.Generate();
-            enemyActor.Spawn(enemyActor.Name + i, ActorType.AI, enemyData.Position);
-            state.CurrentUnits.Add(enemyActor.Id, enemyActor);
-        }
-        return state;
-    }
-    */
+    
 }
