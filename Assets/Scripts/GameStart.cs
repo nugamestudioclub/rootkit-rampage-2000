@@ -22,6 +22,7 @@ public class GameStart : MonoBehaviour
     void Awake()
     {
         IEnumerable<Actor> actors = ActorConfigs.Select((ac) => ac.Generate());
+
         IEnumerable<Ability> abilities = AbilityConfigs.Select((ac) => ac.Generate());
         GameState initialGameState = new GameState(MapConfig.Generate());
         UIManager.LoadGameState(initialGameState);

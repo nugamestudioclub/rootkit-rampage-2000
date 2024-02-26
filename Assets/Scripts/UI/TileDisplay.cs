@@ -20,6 +20,8 @@ public class TileDisplay : MonoBehaviour
 
     private GameObject[,] tileObjects; 
 
+    
+
     public void UpdateTiles(Tile[,] tiles)
     {
         if (tileObjects != null)
@@ -56,7 +58,7 @@ public class TileDisplay : MonoBehaviour
 
 
                 parentObject.transform.position = grid.GetCellCenterWorld(new Vector3Int(i, j, 0));
-
+                parentObject.transform.localScale = new Vector3(0.92f, 0.92f, 0);
                 tileObjects[i, j] = parentObject;
             }
         }
