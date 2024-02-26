@@ -60,7 +60,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -395,6 +395,18 @@ PrefabInstance:
     - target: {fileID: 820294844619344511, guid: 542db831cd7303c44a1363e77ab087fa, type: 3}
       propertyPath: m_Name
       value: MenuPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576985139181478765, guid: 542db831cd7303c44a1363e77ab087fa, type: 3}
+      propertyPath: _offset.y
+      value: -650
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576985139181478765, guid: 542db831cd7303c44a1363e77ab087fa, type: 3}
+      propertyPath: _canvasScale
+      value: 0.0092
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576985139181478765, guid: 542db831cd7303c44a1363e77ab087fa, type: 3}
+      propertyPath: _animationLength
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5803293933488929567, guid: 542db831cd7303c44a1363e77ab087fa, type: 3}
       propertyPath: m_AnchoredPosition.y
