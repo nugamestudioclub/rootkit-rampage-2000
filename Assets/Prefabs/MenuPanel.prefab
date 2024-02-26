@@ -300,11 +300,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0bc7a4c71250f4eb7de6dbc79b2b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isOpen: 0
   _list: {fileID: 7481097782231244696}
   _listItem: {fileID: 6312032707222137210, guid: 84867536a747f1d4caa0c3b2230226c2, type: 3}
   _animationLength: 1
   _offset: {x: 0, y: 0, z: 0}
-  _canvasScale: 1
+  _enabledColor: {r: 0, g: 0, b: 0, a: 1}
+  _disabledColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
 --- !u!1 &2719938257133060072
 GameObject:
   m_ObjectHideFlags: 0

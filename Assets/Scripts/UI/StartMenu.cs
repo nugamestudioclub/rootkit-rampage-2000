@@ -24,13 +24,19 @@ public class StartMenu : MonoBehaviour {
 
 	public event EventHandler<int> ItemSelected;
 
+	[SerializeField]
+	private Color _enabledColor = Color.black;
+
+	[SerializeField]
+	private Color _disabledColor = Color.red;
+
 	private void Awake() {
 		if( !IsOpen ) {
 			transform.position += _offset;
 		}
 	}
 
-	public void AddItem(string name, Sprite icon) {
+	public void AddItem(string name, Sprite icon, bool interactable) {
 		int index = _list.childCount;
 		var obj = Instantiate(_listItem, _list);
 		var item = obj.GetComponent<StartMenuItem>();
@@ -38,6 +44,8 @@ public class StartMenu : MonoBehaviour {
 		item.Icon = icon;
 		item.Index = index;
 		item.Selected += Item_Selected;
+		item.Interactable = interactable;
+		item.Color = interactable ? _enabledColor : _disabledColor;
 	}
 
 	public void Clear() {
