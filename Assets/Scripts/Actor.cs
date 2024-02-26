@@ -21,6 +21,7 @@ public class Actor
             _currentHealth = value;
             if (CurrentHealth <=0)
             {
+                Debug.Log($"{Id} has died");
                 IsDead = true;
             }
         }

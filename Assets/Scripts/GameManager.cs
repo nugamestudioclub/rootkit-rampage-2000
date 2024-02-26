@@ -66,6 +66,9 @@ public class GameManager
                 case GameMode.Menu:
                     DoMenu();
                     break;
+                case GameMode.GameOver:
+                    DoGameOver();
+                    break;
                 default:
                     Debug.Log($"Game Mode: " +
                         $"{Enum.GetName(typeof(GameMode), GameState.CurrentMode)} not handled in Tick");
@@ -140,6 +143,13 @@ public class GameManager
 
 
         //take all effect triggers and get their outcomes
+        foreach (var effectTrigger in GameState.ActiveEffectTriggers)
+        {
+            GameState.ActiveEffects.Add(
+                new KeyValuePair<string, Effect>(
+                    effectTrigger.Key, 
+                    Effects.Resolve(effectTrigger, GameState)));
+        }
         // apply to actors
         Debug.Log($"GameState.ActiveEffects.Count:{ GameState.ActiveEffects.Count}");
         foreach (var effectToApply in GameState.ActiveEffects)
@@ -156,7 +166,9 @@ public class GameManager
         GameState.SelectableAbilities.Clear();
         GameState.SelectableAbilityTiles.Clear();
         GameState.SelectableAbilityTriggers.Clear();
+        //TODO transition
         GameState.ReadyToTick = true;
+        GameState.CurrentMode = GameMode.FinishedEffectAnimation;
     }
 
     private void DoPlayingEffectAnimation()
@@ -170,6 +182,15 @@ public class GameManager
     private void DoFinishedEffectAnimation()
     {
         GameState.ActiveEffects.Clear();
+        var newActors = GameState.CurrentActors.Where(actor => !actor.Value.IsDead);
+        GameState.CurrentActors.Clear();
+        foreach(var aliveActor in newActors )
+        {
+            GameState.CurrentActors.Add(aliveActor);
+        }
+        Debug.Log($"Current actors {GameState.CurrentActors.Count}");
+        UIManager.UpdateActors(GameState.CurrentActors
+            .Select(cu => new KeyValuePair<Actor, Vector2Int>(cu.Value, cu.Value.Position)));
         //need to do logic if the actor can make any more moves with turn
         //end turn if wait or no actions possible
         if (TurnManager.HasActions(GameState))
@@ -186,7 +207,19 @@ public class GameManager
     private void DoEndTurn()
     {
         //TODO
+        TurnManager.EndTurn(GameState);
         GameState.ReadyToTick = true;
+
+        //TODO game over check
+        if (GameState.CurrentActors.Count == 1)
+        {
+            GameState.CurrentMode = GameMode.GameOver; 
+        }
+        else
+        {
+            GameState.CurrentMode = GameMode.StartTurn;
+        }
+        
     }
 
     private void DoEndRound()
@@ -199,5 +232,12 @@ public class GameManager
     {
         //TODO
         GameState.ReadyToTick = true;
+    }
+
+    private void DoGameOver()
+    {
+        //TODO
+        GameState.ReadyToTick = false;
+        Debug.Log("GAME OVER");
     }
 }

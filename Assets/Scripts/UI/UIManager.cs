@@ -87,6 +87,8 @@ public class UIManager : MonoBehaviour
             .First().Value.ToList();
         Debug.Log($"triggersForSelectedAbility count{triggersForSelectedAbility.Count}");
         _gameState.SelectedAbilityTrigger = triggersForSelectedAbility.Where((trigger) => trigger.Selection == selection).First();
+        Debug.Log($"selected ability trigger casterid {_gameState.SelectedAbilityTrigger.CasterId}");
+        Debug.Log($"selected ability trigger effect trigger count {_gameState.SelectedAbilityTrigger.ActorIdsToEffectTriggers.Count}");
         _gameState.CurrentMode = GameMode.ResolveEffects;
         _gameState.ReadyToTick = true;
     }

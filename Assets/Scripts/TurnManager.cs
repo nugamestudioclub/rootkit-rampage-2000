@@ -16,10 +16,29 @@ public class TurnManager
     {
         // get all units
         // put them into the turn order
-        
+
         TurnOrder = gameState.CurrentActors.Keys.OrderBy(_ => gameState.Random.NextDouble()).ToList();
         TurnIndex = 0;
         gameState.CurrentMode = GameMode.StartTurn;
+    }
+
+    private Actor GetNextAliveActor(GameState gameState)
+    {
+        bool isAlive = false;
+        int previousIndex = (TurnIndex - 1 + TurnOrder.Count) % TurnOrder.Count;
+        int currentIndex = previousIndex;
+        do {
+            currentIndex = (currentIndex + 1) % TurnOrder.Count;
+            string nextUnit = TurnOrder[currentIndex];
+            isAlive = gameState.CurrentActors.ContainsKey(nextUnit);
+            if (gameState.CurrentActors.ContainsKey(nextUnit))
+            {
+                TurnIndex = currentIndex;
+                return gameState.CurrentActors[nextUnit];
+            }
+
+        } while (!isAlive && currentIndex != TurnIndex);
+        return null;
     }
 
     public void StartTurn(GameState gameState)
@@ -27,8 +46,13 @@ public class TurnManager
         string nextUnit = TurnOrder[TurnIndex];
         gameState.CurrentMode = GameMode.WaitingForAction;
         //give player move and action budget
-        Actor currentActor = gameState.CurrentActors[nextUnit];
-
+        Actor currentActor = GetNextAliveActor(gameState);
+        if (currentActor == null)
+        {
+            //TODO end round?
+            gameState.CurrentMode = GameMode.GameOver;
+            return;
+        }
         Debug.Log($"Current Actor in StartTurn: {currentActor.Id}");
 
         gameState.CurrentActor = currentActor;
@@ -45,7 +69,7 @@ public class TurnManager
                 StartPlayerTurn(nextUnit, gameState);
                 break;
         }
-        TurnIndex++;
+        TurnIndex = TurnIndex + 1 % TurnOrder.Count;
     }
     public Actor GetCurrentPlayer(GameState gameState)
     {
@@ -70,7 +94,7 @@ public class TurnManager
 
     public bool HasActions(GameState gameState)
     {
-        return gameState.ActorHasAction || gameState.ActorHasMove;
+        return false;// gameState.ActorHasAction || gameState.ActorHasMove;
     }
     private void StartPlayerTurn(string charId, GameState gameState)
     {

@@ -47,9 +47,12 @@ public class GameState
         SelectableAbilityTriggers => _selectableAbilityTriggers;
     public AbilityTrigger SelectedAbilityTrigger { get; set; }
 
+    public IList<KeyValuePair<string, EffectTrigger>> ActiveEffectTriggers => SelectedAbilityTrigger.ActorIdsToEffectTriggers;
+    //the selected abilities triggers should be the active ones
+
     private readonly List<KeyValuePair<string, Effect>> _activeEffects = new List<KeyValuePair<string, Effect>>();
     public IList<KeyValuePair<string, Effect>> ActiveEffects => _activeEffects;
-    //the selected abilities triggers should be the active ones
+
 
     public Map Map { get; private set; }
 
@@ -114,6 +117,7 @@ public class GameState
 
     public static IList<Actor> FindActorsAtPositions(IList<Vector2Int> positions, GameState gameState)
     {
+        Debug.Log($"positions count{positions.Count}");
         return gameState.CurrentActors
             .Where((cu) => positions.Contains(cu.Value.Position))
             .Select((p) => p.Value)

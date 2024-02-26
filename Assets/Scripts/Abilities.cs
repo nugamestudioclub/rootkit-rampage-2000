@@ -89,9 +89,15 @@ public static class Abilities
 
     private static IList<Vector2Int> FindTargetsInRange(AbilityContext context)
     {
+        
         Vector2Int casterLocation = context.GameState.CurrentActors[context.CasterId].Position;
+
+
         Tile[,] board = context.GameState.Tiles;
         IList<Vector2Int> targets = new List<Vector2Int>();
+        targets.Add(context.Selection);
+        return targets;
+
         for (int i = 0; i < board.GetLength(0); i++)
         {
             for (int j = 0; j < board.GetLength(1); j++)
