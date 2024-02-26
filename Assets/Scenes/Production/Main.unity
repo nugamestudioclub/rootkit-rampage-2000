@@ -247,6 +247,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69420fbde0627844fbdc564398dc452b, type: 3}
+--- !u!114 &394322410 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1018897203143853251, guid: 69420fbde0627844fbdc564398dc452b, type: 3}
+  m_PrefabInstance: {fileID: 110302891}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7eef1ae5b1a1244b553f3399b0fcb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1216400556 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8736233563761829024, guid: 69420fbde0627844fbdc564398dc452b, type: 3}
+  m_PrefabInstance: {fileID: 110302891}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0bc7a4c71250f4eb7de6dbc79b2b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1665955528
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +413,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameStart
       objectReference: {fileID: 0}
+    - target: {fileID: 6814732091987525803, guid: ae8be4201d38bc24991d3b2d6a60cb0f, type: 3}
+      propertyPath: _taskbar
+      value: 
+      objectReference: {fileID: 394322410}
+    - target: {fileID: 6814732091987525803, guid: ae8be4201d38bc24991d3b2d6a60cb0f, type: 3}
+      propertyPath: _startMenu
+      value: 
+      objectReference: {fileID: 1216400556}
     - target: {fileID: 6814732091987525803, guid: ae8be4201d38bc24991d3b2d6a60cb0f, type: 3}
       propertyPath: tileDisplay
       value: 

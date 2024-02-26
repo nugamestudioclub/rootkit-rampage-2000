@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static TMPro.TMP_Compatibility;
 
 public class UIManager : MonoBehaviour {
 	//this class should have methods just to update the UI with the payloads it needs
@@ -26,11 +27,11 @@ public class UIManager : MonoBehaviour {
 		_startMenu.ItemSelected += StartMenu_ItemSelected;
 	}
 	void Start() {
-		_startMenu.AddItem("Hello", null);
-		_startMenu.AddItem("World", null);
-		_startMenu.AddItem("1", null);
-		_startMenu.AddItem("2", null);
-		OpenAbilityMenu();
+		//_startMenu.AddItem("Hello", null);
+		//_startMenu.AddItem("World", null);
+		//_startMenu.AddItem("1", null);
+		//_startMenu.AddItem("2", null);
+		//OpenAbilityMenu();
 	}
 
 	private void Update() {
@@ -52,10 +53,19 @@ public class UIManager : MonoBehaviour {
 	private bool IsCellValid(GameState gameState, Vector2Int cell) {
 		return gameState.SelectableTiles.Contains(cell);
 	}
+    public void Initialize(GameState gameState, IEnumerable<KeyValuePair<AbilityType, Sprite>> activeSprites)
+    {
 
-	public void LoadGameState(GameState gameState) {
+        _gameState = gameState;
+        _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>(activeSprites);
+		tileDisplay.InitializeMapDimension(gameState.Map.Width, gameState.Map.Height);
+    }
+    public void LoadGameState(GameState gameState) {
 		_gameState = gameState;
-	}
+		UpdateTiles(gameState.Tiles);
+        UpdateActors(gameState.CurrentUnits
+			.Select(cu => new KeyValuePair<Actor, Vector2Int>(cu.Value, cu.Value.Position)));
+    }
 
 	//choose tile
 	public void SelectTile(Vector2Int selection) {
@@ -70,10 +80,7 @@ public class UIManager : MonoBehaviour {
 	}
 
 
-	public void Load(GameState gameState, IEnumerable<KeyValuePair<AbilityType, Sprite>> activeSprites) {
-		LoadGameState(gameState);
-		_activeSprites = new List<KeyValuePair<AbilityType, Sprite>>(activeSprites);
-	}
+	
 
 	public void StartRound(int round) {
 
@@ -97,7 +104,13 @@ public class UIManager : MonoBehaviour {
 	public void UpdateTiles(Tile[,] tiles) {
 		tileDisplay.UpdateTiles(tiles);
 	}
-	public void ShowSelectableTiles(IList<Vector2Int> selectableTiles) {
+
+    public void UpdateActors(IEnumerable<KeyValuePair<Actor, Vector2Int>> actorPositions)
+	{
+        tileDisplay.UpdateActors(actorPositions);
+    }
+
+    public void ShowSelectableTiles(IList<Vector2Int> selectableTiles) {
 		throw new NotImplementedException();
 	}
 

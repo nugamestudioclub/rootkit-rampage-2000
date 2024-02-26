@@ -16,11 +16,11 @@ MonoBehaviour:
   <Width>k__BackingField: 12
   <Height>k__BackingField: 8
   <MapData>k__BackingField: {fileID: 0}
-  <PlayerPositions>k__BackingField:
+  <PlayerSpawns>k__BackingField:
   - Position: {x: 1, y: 1}
     ActorConfig: {fileID: 11400000, guid: 01aaa72f46f46994aa52d0370a9c7603, type: 2}
-  <EnemyPositions>k__BackingField:
-  - Position: {x: 5, y: 5}
+  <EnemySpawns>k__BackingField:
+  - Position: {x: 5, y: 6}
     ActorConfig: {fileID: 11400000, guid: 0d067a55677c37d49beb3c728158cbe9, type: 2}
-  - Position: {x: 6, y: 7}
+  - Position: {x: 7, y: 3}
     ActorConfig: {fileID: 11400000, guid: 833807897d861934f8046a3c0ebb6746, type: 2}

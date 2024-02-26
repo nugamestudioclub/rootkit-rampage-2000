@@ -9,19 +9,22 @@ using UnityEngine;
 public class TurnManager
 {
 
-    public IList<string> TurnOrder { get; private set;}
-    public  int TurnIndex { get; private set; }
+    public IList<string> TurnOrder { get; private set; }
+    public int TurnIndex { get; private set; }
 
     public void StartRound(GameState gameState)
     {
         // get all units
         // put them into the turn order
+        
         TurnOrder = gameState.CurrentUnits.Keys.OrderBy(_ => gameState.Random.NextDouble()).ToList();
         TurnIndex = 0;
+        gameState.CurrentMode = GameMode.StartTurn;
     }
 
     public void StartTurn(GameState gameState)
     {
+        Debug.Log(TurnOrder.Count);
         string nextUnit = TurnOrder[TurnIndex];
         gameState.CurrentMode = GameMode.WaitingForAction;
         //give player move and action budget
@@ -33,7 +36,7 @@ public class TurnManager
         {
             case ActorType.Player:
                 StartPlayerTurn(nextUnit, gameState);
-                
+
                 break;
             case ActorType.Ally:
             case ActorType.AI:
@@ -69,7 +72,7 @@ public class TurnManager
     }
     private void StartPlayerTurn(string charId, GameState gameState)
     {
-        
+
     }
 
     public void EndTurn(GameState gameState)
