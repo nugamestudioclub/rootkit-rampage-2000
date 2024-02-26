@@ -18,6 +18,13 @@ public class MapConfig : ScriptableObject
     [field: SerializeField]
     public TextAsset MapData { get; private set; }
 
+
+    [field: SerializeField]
+    public List<Vector2Int> PlayerPositions { get; private set; }
+
+    [field: SerializeField]
+    public List<ActorPositionData> EnemyPositions { get; private set; }
+
     //sprite
 
     public Tile[,] Generate()
@@ -33,6 +40,24 @@ public class MapConfig : ScriptableObject
         }
 
         return map;
+    }
+
+    public GameState GenerateNextGameState(List<Actor> players)
+    {
+        GameState state = new GameState(Generate());
+        for (int i = 0; i < PlayerPositions.Count && i < players.Count; i++)
+        {
+            players[i].Spawn(players[i].Id, ActorType.Player, PlayerPositions[i]);
+            state.CurrentUnits.Add(players[i].Id, players[i]);
+        }
+        for (int i = 0; i <  EnemyPositions.Count; i++)
+        {
+            ActorPositionData enemyData = EnemyPositions[i];
+            Actor enemyActor = enemyData.ActorConfig.Generate();
+            enemyActor.Spawn(enemyActor.Name + i, ActorType.AI, enemyData.Position);
+            state.CurrentUnits.Add(enemyActor.Id, enemyActor);
+        }
+        return state;
     }
 
 }
