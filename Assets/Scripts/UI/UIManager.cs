@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 	//this class should have methods just to update the UI with the payloads it needs
@@ -14,6 +15,9 @@ public class UIManager : MonoBehaviour {
 
 	[SerializeField]
 	private StartMenu _startMenu;
+
+	[SerializeField]
+	private Taskbar _taskbar;
 	
     private List<KeyValuePair<AbilityType, Sprite>> _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>();
     public IList<KeyValuePair<AbilityType, Sprite>> ActiveSprites => _activeSprites;
@@ -26,7 +30,7 @@ public class UIManager : MonoBehaviour {
 		_startMenu.AddItem("World", null);
 		_startMenu.AddItem("1", null);
 		_startMenu.AddItem("2", null);
-		_startMenu.Open();
+		OpenAbilityMenu();
 	}
 
 	private void Update() {
@@ -90,7 +94,6 @@ public class UIManager : MonoBehaviour {
 	public void ShowAbilityMenu(
 		IEnumerable<KeyValuePair<Ability,
 			IEnumerable<AbilityTrigger>>> abilities) {
-		throw new NotImplementedException();
 	}
 
 	public void UpdateTiles(Tile[,] tiles) {
@@ -100,8 +103,18 @@ public class UIManager : MonoBehaviour {
 		throw new NotImplementedException();
 	}
 
+	private void OpenAbilityMenu() {
+		_startMenu.Open();
+		_taskbar.Open();
+	}
+
+	private void CloseAbilityMenu() {
+		_startMenu.Close();
+		_taskbar.Close();
+	}
+
 	private void StartMenu_ItemSelected(object sender, int index) {
 		Debug.Log(index);
-		_startMenu.Close();
+		CloseAbilityMenu();
 	}
 }
