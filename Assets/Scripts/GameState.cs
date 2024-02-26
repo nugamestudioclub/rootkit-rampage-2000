@@ -58,11 +58,17 @@ public class GameState
     public System.Random Random { get; } = new System.Random();
 
     public int Round { get; set; }
-    public GameState(Map map, IDictionary<string, Actor> startingUnits)
+    public GameState(Map map, Dictionary<string, Actor> startingUnits)
     {
         Map = map;
         tiles = map.Tiles;
         _costMap = MakeCostMap();
+        _currentActors = startingUnits;
+        foreach (KeyValuePair<string, Actor> idToActor in startingUnits)
+        {
+            IDictionary<string, Vector2Int> spawnPosDictmap = new Dictionary<string, Vector2Int>(Map.SpawnPositions);
+            idToActor.Value.Move(spawnPosDictmap[idToActor.Key]);
+        }
     }
 
     private float[,] MakeCostMap()
