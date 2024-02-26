@@ -66,6 +66,7 @@ public class MapConfig : ScriptableObject
 
         return map;
     }
+    /*
     public GameState GenerateNextGameState(List<Actor> players)
     {
         GameState state = new GameState(GenerateTiles());
@@ -83,5 +84,5 @@ public class MapConfig : ScriptableObject
         }
         return state;
     }
-
+    */
 }
