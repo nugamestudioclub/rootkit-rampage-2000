@@ -9,18 +9,18 @@ public class UIManager : MonoBehaviour {
 	// to render menus, selections, etc.
 
 	private GameState _gameState;
-	
-    [SerializeField]
-    private TileDisplay tileDisplay;
+
+	[SerializeField]
+	private TileDisplay tileDisplay;
 
 	[SerializeField]
 	private StartMenu _startMenu;
 
 	[SerializeField]
 	private Taskbar _taskbar;
-	
-    private List<KeyValuePair<AbilityType, Sprite>> _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>();
-    public IList<KeyValuePair<AbilityType, Sprite>> ActiveSprites => _activeSprites;
+
+	private List<KeyValuePair<AbilityType, Sprite>> _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>();
+	public IList<KeyValuePair<AbilityType, Sprite>> ActiveSprites => _activeSprites;
 
 	private void Awake() {
 		_startMenu.ItemSelected += StartMenu_ItemSelected;
@@ -52,12 +52,11 @@ public class UIManager : MonoBehaviour {
 	private bool IsCellValid(GameState gameState, Vector2Int cell) {
 		return gameState.SelectableTiles.Contains(cell);
 	}
-	
-    public void LoadGameState(GameState gameState)
-    {
-        _gameState = gameState;
-    }
-	
+
+	public void LoadGameState(GameState gameState) {
+		_gameState = gameState;
+	}
+
 	//choose tile
 	public void SelectTile(Vector2Int selection) {
 		_gameState.SelectedTile = selection;
@@ -71,29 +70,28 @@ public class UIManager : MonoBehaviour {
 	}
 
 
-    public void Load(GameState gameState, IEnumerable<KeyValuePair<AbilityType, Sprite>> activeSprites)
-    {
-        LoadGameState(gameState);
-        _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>(activeSprites);
-    }
-
-	//choose an ability
-	public void SelectAbility(int index) {
-		_gameState.SelectedAbility = _gameState.SelectableAbilities[index];
-		_gameState.CurrentMode = GameMode.WaitingForSelection;
+	public void Load(GameState gameState, IEnumerable<KeyValuePair<AbilityType, Sprite>> activeSprites) {
+		LoadGameState(gameState);
+		_activeSprites = new List<KeyValuePair<AbilityType, Sprite>>(activeSprites);
 	}
 
 	public void StartRound(int round) {
 
 	}
-	
+
 	public void EndRound(int round) {
 
 	}
 
-	public void ShowAbilityMenu(
-		IEnumerable<KeyValuePair<Ability,
-			IEnumerable<AbilityTrigger>>> abilities) {
+	public void ShowAbilityMenu(IEnumerable<KeyValuePair<Ability, IEnumerable<AbilityTrigger>>> abilities) {
+		_startMenu.Clear();
+		foreach( var (ability, trigger) in abilities ) {
+			_startMenu.AddItem(
+				ability.Name,
+				ActiveSprites.Where(x => x.Key == ability.Type).FirstOrDefault(null).Value
+			);
+		}
+		OpenAbilityMenu();
 	}
 
 	public void UpdateTiles(Tile[,] tiles) {
@@ -113,8 +111,14 @@ public class UIManager : MonoBehaviour {
 		_taskbar.Close();
 	}
 
+	private void SelectAbility(int index) {
+		_gameState.SelectedAbility = _gameState.SelectableAbilities[index];
+		_gameState.CurrentMode = GameMode.WaitingForSelection;
+	}
+
 	private void StartMenu_ItemSelected(object sender, int index) {
 		Debug.Log(index);
+		SelectAbility(index);
 		CloseAbilityMenu();
 	}
 }
