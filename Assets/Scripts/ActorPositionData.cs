@@ -10,4 +10,5 @@ public struct ActorPositionData
 
     [SerializeField]
     public ActorConfig ActorConfig;
+
 }

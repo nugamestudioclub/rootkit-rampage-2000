@@ -30,7 +30,7 @@ public class ActorConfig : ScriptableObject
 
     public Actor Generate()
     {
-        return new Actor(Name, Health, Energy, Movement, Abilities.Select((a) => a.Generate()).ToList(), Tags);
+        return new Actor(Name, Health, Energy, Movement, Abilities.Select((a) => a.Generate().Item1).ToList(), Tags);
     }
 
 }

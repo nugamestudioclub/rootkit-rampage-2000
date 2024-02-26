@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -21,16 +22,39 @@ public class MapConfig : ScriptableObject
 
 
     [field: SerializeField]
-    public List<Vector2Int> PlayerPositions { get; private set; }
+    public List<ActorPositionData> PlayerSpawns { get; private set; }
 
     [field: SerializeField]
-    public List<ActorPositionData> EnemyPositions { get; private set; }
+    public List<ActorPositionData> EnemySpawns { get; private set; }
 
     //sprite
 
-    public Tile[,] Generate()
+    public (Map, IEnumerable<KeyValuePair<string, Actor>>) Generate()
     {
-        Tile[,] map = new Tile[Width,Height];
+        List<ActorPositionData> spawnPositionData = new List<ActorPositionData>();
+        foreach (ActorPositionData spawns in PlayerSpawns)
+        {
+            spawnPositionData.Add(spawns);
+        }
+        foreach (ActorPositionData spawns in EnemySpawns)
+        {
+            spawnPositionData.Add(spawns);
+        }
+        int idIndex = 0;
+        List<KeyValuePair<string, Actor>> idsToActors = new List<KeyValuePair<string, Actor>>();
+        List<KeyValuePair<string, Vector2Int>> idsToSpawnsPositions = new List<KeyValuePair<string, Vector2Int>>();
+        foreach (ActorPositionData spawns in spawnPositionData)
+        {
+            string actorId = $"{ idIndex++ }{ spawns.ActorConfig.Name}";
+            idsToActors.Add(new KeyValuePair<string, Actor>(actorId, spawns.ActorConfig.Generate()));
+            idsToSpawnsPositions.Add(new KeyValuePair<string, Vector2Int>(actorId, spawns.Position));
+        }
+        return (new Map(Name, Width, Height, GenerateTiles(), idsToSpawnsPositions.ToList()), 
+            idsToActors.ToList());
+    }
+    public Tile[,] GenerateTiles()
+    {
+        Tile[,] map = new Tile[Width, Height];
 
         for (int i = 0; i < map.GetLength(0); i++)
         {
@@ -42,18 +66,17 @@ public class MapConfig : ScriptableObject
 
         return map;
     }
-
     public GameState GenerateNextGameState(List<Actor> players)
     {
-        GameState state = new GameState(Generate());
-        for (int i = 0; i < PlayerPositions.Count && i < players.Count; i++)
+        GameState state = new GameState(GenerateTiles());
+        for (int i = 0; i < PlayerSpawns.Count && i < players.Count; i++)
         {
-            players[i].Spawn(players[i].Id, ActorType.Player, PlayerPositions[i]);
+            players[i].Spawn(players[i].Id, ActorType.Player, PlayerSpawns[i].Position);
             state.CurrentUnits.Add(players[i].Id, players[i]);
         }
-        for (int i = 0; i <  EnemyPositions.Count; i++)
+        for (int i = 0; i < EnemySpawns.Count; i++)
         {
-            ActorPositionData enemyData = EnemyPositions[i];
+            ActorPositionData enemyData = EnemySpawns[i];
             Actor enemyActor = enemyData.ActorConfig.Generate();
             enemyActor.Spawn(enemyActor.Name + i, ActorType.AI, enemyData.Position);
             state.CurrentUnits.Add(enemyActor.Id, enemyActor);

@@ -33,7 +33,7 @@ public class GameState
     public IList<KeyValuePair<string, Effect>> ActiveEffects => _activeEffects;
 
 
-
+    public Map Map {get; private set;}
 
 
     private readonly Tile[,] tiles;
@@ -58,9 +58,10 @@ public class GameState
     public System.Random Random { get; } = new System.Random();
 
     public int Round { get; set; }
-    public GameState(Tile[,] map)
+    public GameState(Map map, IDictionary<string, Actor> startingUnits)
     {
-        tiles = map;
+        Map = map;
+        tiles = map.Tiles;
         _costMap = MakeCostMap();
     }
 

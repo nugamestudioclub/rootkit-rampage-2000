@@ -38,12 +38,16 @@ public class UIManager : MonoBehaviour
         return gameState.SelectableTiles.Contains(cell);
     }
 
-    public void LoadGameState(GameState gameState, IEnumerable<KeyValuePair<AbilityType, Sprite>> activeSprites)
+    public void LoadGameState(GameState gameState)
     {
         _gameState = gameState;
-        _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>(activeSprites);
     }
 
+    public void Load(GameState gameState, IEnumerable<KeyValuePair<AbilityType, Sprite>> activeSprites)
+    {
+        LoadGameState(gameState);
+        _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>(activeSprites);
+    }
 
     //choose tile
     public void SelectTile(Vector2Int selection)

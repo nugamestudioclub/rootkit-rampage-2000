@@ -24,8 +24,14 @@ public class GameStart : MonoBehaviour
         IEnumerable<Actor> actors = ActorConfigs.Select((ac) => ac.Generate());
 
         IEnumerable<(Ability, Sprite)> abilities = AbilityConfigs.Select((ac) => ac.Generate());
-        GameState initialGameState = new GameState(MapConfig.Generate());
-        UIManager.LoadGameState(initialGameState, abilities.Select((a) => 
+        (Map startingMap, IEnumerable<KeyValuePair<string, Actor>> actorsToids) = MapConfig.Generate();
+        Dictionary<string, Actor> actorDict = new Dictionary<string, Actor>();
+        foreach (KeyValuePair<string, Actor> actor in actorsToids)
+        {
+            actorDict.Add(actor.Key, actor.Value);
+        }
+        GameState initialGameState = new GameState(startingMap, actorDict);
+        UIManager.Load(initialGameState, abilities.Select((a) => 
         new KeyValuePair<AbilityType, Sprite>(a.Item1.Type, a.Item2)));
         //TODO (after jam): Abilities, and actors to game state
         Manager = new GameManager(
