@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Playables;
 using UnityEngine;
 
 public class GameManager
@@ -33,12 +32,14 @@ public class GameManager
 
         if (GameState.ReadyToTick)
         {
+            Debug.Log("ready to tick");
             switch (GameState.CurrentMode)
             {
                 case GameMode.StartRound:
                     DoStartRound();
                     break;
                 case GameMode.StartTurn:
+                    Debug.Log("before starting turn");
                     DoStartTurn();
                     break;
                 case GameMode.WaitingForAction:
@@ -87,6 +88,7 @@ public class GameManager
 
     private void DoStartTurn()
     {
+        Debug.Log("starting turn");
         UIManager.LoadGameState(GameState);
         TurnManager.StartTurn(GameState);
         //GameState.CurrentMode = GameMode.WaitingForAction;
@@ -117,6 +119,10 @@ public class GameManager
         }
         if (currentPlayer.Type == ActorType.Player)
         {
+            UIManager.ShowAbilityMenu(GameState.SelectableAbilityTriggers);
+        } else
+        {
+            Debug.Log("AI action");
             UIManager.ShowAbilityMenu(GameState.SelectableAbilityTriggers);
         }
         GameState.ReadyToTick = false;
@@ -182,7 +188,7 @@ public class GameManager
     private void DoFinishedEffectAnimation()
     {
         GameState.ActiveEffects.Clear();
-        var newActors = GameState.CurrentActors.Where(actor => !actor.Value.IsDead);
+        var newActors = GameState.CurrentActors.Where(actor => !actor.Value.IsDead).ToList();
         GameState.CurrentActors.Clear();
         foreach(var aliveActor in newActors )
         {
@@ -208,7 +214,6 @@ public class GameManager
     {
         //TODO
         TurnManager.EndTurn(GameState);
-        GameState.ReadyToTick = true;
 
         //TODO game over check
         if (GameState.CurrentActors.Count == 1)
@@ -219,7 +224,8 @@ public class GameManager
         {
             GameState.CurrentMode = GameMode.StartTurn;
         }
-        
+        Debug.Log("ending turn");
+        GameState.ReadyToTick = true;
     }
 
     private void DoEndRound()

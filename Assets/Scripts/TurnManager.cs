@@ -1,9 +1,6 @@
 using AStar;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using UnityEditor.Playables;
 using UnityEngine;
 
 public class TurnManager
@@ -18,58 +15,70 @@ public class TurnManager
         // put them into the turn order
 
         TurnOrder = gameState.CurrentActors.Keys.OrderBy(_ => gameState.Random.NextDouble()).ToList();
+        Debug.Log("turn count" + TurnOrder.Count);
         TurnIndex = 0;
         gameState.CurrentMode = GameMode.StartTurn;
     }
 
-    private Actor GetNextAliveActor(GameState gameState)
+    private int GetNextAliveIndex(GameState gameState, int turnIndex, List<string> turnOrder)
     {
-        bool isAlive = false;
-        int previousIndex = (TurnIndex - 1 + TurnOrder.Count) % TurnOrder.Count;
-        int currentIndex = previousIndex;
-        do {
-            currentIndex = (currentIndex + 1) % TurnOrder.Count;
-            string nextUnit = TurnOrder[currentIndex];
+        bool isAlive;
+        int currentIndex = (TurnIndex - 1 + TurnOrder.Count) % TurnOrder.Count;
+        string nextUnit;
+   
+        for (int i = turnIndex; i < turnOrder.Count; i++)
+        {
+            nextUnit = turnOrder[currentIndex];
             isAlive = gameState.CurrentActors.ContainsKey(nextUnit);
-            if (gameState.CurrentActors.ContainsKey(nextUnit))
+            if (isAlive)
             {
-                TurnIndex = currentIndex;
-                return gameState.CurrentActors[nextUnit];
+                return currentIndex;
             }
-
-        } while (!isAlive && currentIndex != TurnIndex);
-        return null;
+        }
+        for (int i = 0; i < TurnIndex; i++)
+        {
+            nextUnit = turnOrder[currentIndex];
+            isAlive = gameState.CurrentActors.ContainsKey(nextUnit);
+            if (isAlive)
+            {
+                return currentIndex;
+            }
+        }
+        return -1;
     }
 
     public void StartTurn(GameState gameState)
     {
-        string nextUnit = TurnOrder[TurnIndex];
-        gameState.CurrentMode = GameMode.WaitingForAction;
-        //give player move and action budget
-        Actor currentActor = GetNextAliveActor(gameState);
-        if (currentActor == null)
+        TurnIndex = GetNextAliveIndex(gameState, TurnIndex, TurnOrder.ToList());
+        if (TurnIndex < 0)
         {
             //TODO end round?
             gameState.CurrentMode = GameMode.GameOver;
             return;
         }
-        Debug.Log($"Current Actor in StartTurn: {currentActor.Id}");
+        string nextActorId = TurnOrder[TurnIndex];
+        Actor currentActor = gameState.CurrentActors[nextActorId];
+        gameState.CurrentActor = currentActor;
 
+        
+        Debug.Log($"Current Actor in StartTurn: {currentActor.Id}");
+        //give player move and action budget
         gameState.CurrentActor = currentActor;
         gameState.ActorHasMove = true;
         gameState.ActorHasAction = true;
         switch (currentActor.Type)
         {
             case ActorType.Player:
-                StartPlayerTurn(nextUnit, gameState);
+                StartPlayerTurn(nextActorId, gameState);
                 break;
             case ActorType.Ally:
             case ActorType.AI:
                 //DoAITurn(nextUnit, gameState);
-                StartPlayerTurn(nextUnit, gameState);
+                StartPlayerTurn(nextActorId, gameState);
                 break;
         }
-        TurnIndex = TurnIndex + 1 % TurnOrder.Count;
+        TurnIndex = (TurnIndex + 1) % TurnOrder.Count;
+        gameState.CurrentMode = GameMode.WaitingForAction;
     }
     public Actor GetCurrentPlayer(GameState gameState)
     {

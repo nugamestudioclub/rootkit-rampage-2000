@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Playables;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -147,7 +146,7 @@ public class UIManager : MonoBehaviour
     private void SelectAbility(int index)
     {
         //need to update the selectable tiles with the tiles the selected ability can target
-        
+        Debug.Log($"Selected ability at index {index}");
         _gameState.SelectedAbility = _gameState.SelectableAbilities[index];
         Debug.Log($"Selected ability {_gameState.SelectableAbilities[index].Name} at index {index}");
         _gameState.CurrentMode = GameMode.WaitingForSelection;
