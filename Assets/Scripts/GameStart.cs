@@ -23,16 +23,17 @@ public class GameStart : MonoBehaviour
     {
         IEnumerable<Actor> actors = ActorConfigs.Select((ac) => ac.Generate());
 
-        IEnumerable<Ability> abilities = AbilityConfigs.Select((ac) => ac.Generate());
+        IEnumerable<(Ability, Sprite)> abilities = AbilityConfigs.Select((ac) => ac.Generate());
         GameState initialGameState = new GameState(MapConfig.Generate());
-        UIManager.LoadGameState(initialGameState);
+        UIManager.LoadGameState(initialGameState, abilities.Select((a) => 
+        new KeyValuePair<AbilityType, Sprite>(a.Item1.Type, a.Item2)));
         //TODO (after jam): Abilities, and actors to game state
         Manager = new GameManager(
             initialGameState,
             new TurnManager(),
             UIManager,
             actors.ToList(),
-            abilities.ToList()
+            abilities.Select((a) => a.Item1).ToList()
         );
         Debug.Log($"Starting Game Mode: {Enum.GetName(typeof(GameMode), initialGameState.CurrentMode)}");
         //for debugging

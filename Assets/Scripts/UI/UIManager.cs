@@ -11,7 +11,8 @@ public class UIManager : MonoBehaviour
     private GameState _gameState;
     [SerializeField]
     private TileDisplay tileDisplay;
-
+    private List<KeyValuePair<AbilityType, Sprite>> _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>();
+    public IList<KeyValuePair<AbilityType, Sprite>> ActiveSprites => _activeSprites;
 
     private void Update()
     {
@@ -37,9 +38,10 @@ public class UIManager : MonoBehaviour
         return gameState.SelectableTiles.Contains(cell);
     }
 
-    public void LoadGameState(GameState gameState)
+    public void LoadGameState(GameState gameState, IEnumerable<KeyValuePair<AbilityType, Sprite>> activeSprites)
     {
         _gameState = gameState;
+        _activeSprites = new List<KeyValuePair<AbilityType, Sprite>>(activeSprites);
     }
 
 

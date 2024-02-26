@@ -22,7 +22,6 @@ public class AbilityConfig : ScriptableObject
     public int EnergyCost { get; private set; }
 
     [field: SerializeField]
-    
     public int Range { get; private set; }
 
     [field: SerializeField]
@@ -31,8 +30,10 @@ public class AbilityConfig : ScriptableObject
     [field: SerializeField]
     public List<string> Tags { get; private set; }
 
-    public Ability Generate()
+    [field: SerializeField]
+    public Sprite Icon { get; private set; }
+    public (Ability, Sprite) Generate()
     {
-        return new Ability(Type, Tags, Name, Accuracy, EnergyCost, Range, EffectTriggers.Select((e) => e.Generate()).ToList());
+        return (new Ability(Type, Tags, Name, Accuracy, EnergyCost, Range, EffectTriggers.Select((e) => e.Generate()).ToList()), Icon);
     }
 }
